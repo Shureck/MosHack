@@ -14,31 +14,16 @@ import okhttp3.Response;
 public class HttpRequest {
 
     private final OkHttpClient client = new OkHttpClient();
-    public String str;
-
-    class IOAsyncTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            return sendData(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String response) {
-            str = response;
-            Log.d("DDD",response);
-        }
-    }
 
     public String sendData(String str){
         try {
-            RequestBody formBody = new FormBody.Builder()
-                    .add("LatLong", str)
-                    .build();
+//            RequestBody formBody = new FormBody.Builder()
+//                    .add("LatLong", str)
+//                    .build();
 
             Request request = new Request.Builder()
-                    .url("http://25.101.65.98:8080/api"+str)
-                    .post(formBody)
+                    .url(str)
+                    .get()
                     .build();
 
             Response response = client.newCall(request).execute();
