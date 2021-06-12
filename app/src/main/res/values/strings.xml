@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MosHack</string>
     <string name="title_activity_maps">Map</string>
 
@@ -33,5 +33,17 @@
     <string name="button_subs">Подписки</string>
     <string name="button_rec">Рекомендации</string>
     <string name="button_near">Мой район</string>
+
+    <string name="place_name">Культурный центр «Новослободский»</string>
+    <string name="date_time">29 июня, 19.00</string>
+    <string name="full_event_desc">Молодые актеры театра-студии «Три ступени» покажут спектакль
+        «Прометей прикованный» по пьесе древнегреческого драматурга Эсхила. Дарья Кабанова,
+        режиссер постановки, предлагает зрителям взглянуть на поступки Прометея с непривычной
+        точки зрения."</string>
+
+    <string name="go_button_text_free">Записаться</string>
+    <string name="go_button_text_paid">Купить билет</string>
+    <string name="go_to_map_text">На карте</string>
+    <string name="phone" tools:ignore="TypographyDashes">8-999-555-33-22</string>
 
 </resources>

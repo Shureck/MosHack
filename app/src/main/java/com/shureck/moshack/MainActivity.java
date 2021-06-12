@@ -1,6 +1,7 @@
 package com.shureck.moshack;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -59,8 +60,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
+
 //        Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
 //        startActivity(intent);
+
 
 //        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
 
