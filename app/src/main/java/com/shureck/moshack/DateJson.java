@@ -7,6 +7,6 @@ public class DateJson {
     List<String> sphere;
     Boolean free;
     String title;
-    Integer date_from_timestamp;
+    Long date_from_timestamp;
     int idItem;
 }

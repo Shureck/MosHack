@@ -19,11 +19,11 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -60,6 +60,9 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         calendarView.setDate(date.getTime().getTime());
         SimpleDateFormat sd = new SimpleDateFormat("d MMMM, EEEE");
         textView.setText(sd.format(date.getTime().getTime()));
+
+        SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/findByDate?page=0&size=10&date="+sdff.format(date.getTime().getTime()));
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -103,7 +106,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         //buttonContents = SurveyHelper.fillSurveyContent();
         tappedButtons = 0;
 
-        SimpleDateFormat sddd = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sddd = new SimpleDateFormat("HH:mm");
 
         linearLayout.removeAllViews();
 
@@ -118,7 +121,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
             calendarEventSphere.setText(previews.get(i).sphere.get(0));
             calendarEventFree.setText(previews.get(i).free.toString());
             calendarEventName.setText(previews.get(i).title);
-            calendarEventTime.setText(sddd.format(new Date(previews.get(i).date_from_timestamp).getTime()));
+            calendarEventTime.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
 
             linearLayout.addView(calendarEventView);
         }
@@ -136,7 +139,6 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
             String strr = response;
             Gson gson = new Gson();
             List<DateJson> previews = stringToArray(strr, DateJson[].class);
-            System.out.println("DDD "+previews.get(0).title);
             setData(previews);
         }
     }
