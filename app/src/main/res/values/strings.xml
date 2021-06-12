@@ -21,4 +21,17 @@
 
     <string name="subscribe">Подписаться</string>
     <string name="unsubscribe">Отписаться</string>
+
+    <string name="my_afisha">Моя афиша</string>
+
+    <string name="categories">Категории и каналы</string>
+    <string name="calendar">Календарь</string>
+    <string name="my_events">Мои события</string>
+    <string name="near_events">События рядом</string>
+
+    <string name="button_all">Всё</string>
+    <string name="button_subs">Подписки</string>
+    <string name="button_rec">Рекомендации</string>
+    <string name="button_near">Мой район</string>
+
 </resources>
