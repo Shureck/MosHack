@@ -7,6 +7,8 @@
     <string name="next_string">Далее</string>
 
     <string name="date">29 июня</string>
+    <string name="time">19.00</string>
+    <string name="date_and_weekday">29 июня, четверг</string>
     <string name="sphere">Спектакль</string>
     <string name="free">Бесплатно</string>
     <string name="event_name">«Прометей прикованный» в культурном центре «Новослободский»</string>
