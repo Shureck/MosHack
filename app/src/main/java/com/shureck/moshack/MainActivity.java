@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -35,6 +38,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -70,17 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
         startActivity(intent);
 
-
-
-        selectedGenres = new ArrayList<>();
-        buttonContents = new ArrayList<>();
-        genresToSend = new ArrayList<>();
-
-        buttonContents = SurveyHelper.fillSurveyContent();
-        tappedButtons = 0;
-
-        setData();
-
+//        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
 
     }
 
@@ -89,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void setData(){
+    public void setData(List<Preview> previews){
 
         button = findViewById(R.id.button);
         gridLayout = findViewById(R.id.grid);
@@ -99,11 +93,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
 
+        selectedGenres = new ArrayList<>();
+        buttonContents = new ArrayList<>();
+        genresToSend = new ArrayList<>();
+
+        buttonContents = SurveyHelper.fillSurveyContent();
+        tappedButtons = 0;
 
         button.setOnClickListener(this);
 
         surveyButtons = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
+        for (int i=0; i<previews.size(); i++) {
             View newGenreButton = inflater.inflate(R.layout.element, null);
 
             ImageView genreImage = newGenreButton.findViewById(R.id.eventImageView);
@@ -112,17 +112,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView freeTextView = newGenreButton.findViewById(R.id.freeTextView);
             TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
 
-            String sss = "";
-
-//            imageLoader.loadImage("https://www.mos.ru/upload/newsfeed/afisha/images9wlNA3(2)(15).jpg", new SimpleImageLoadingListener() {
-//                @Override
-//                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), loadedImage);
-//                    genreImage.setBackgroundDrawable(bitmapDrawable);
-//                }
-//            });
-
-            imageLoader.displayImage("https://www.mos.ru/upload/newsfeed/afisha/87479468_3110278345663513_8879590124199870464_n(7).jpg", genreImage);
+            imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
+            dateTextView.setText(previews.get(i).date);
+            sphereTextView.setText(previews.get(i).sphere.get(0));
+            //freeTextView.setText(previews.get(i);
+            eventHeader.setText(previews.get(i).title);
 
 
             surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
@@ -161,8 +155,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(String response) {
             strr = response;
-            System.out.println("DDD "+response);
+            Gson gson = new Gson();
+            List<Preview> previews = stringToArray(strr, Preview[].class);
+            System.out.println("DDD "+previews.get(0).date);
+            setData(previews);
         }
+    }
+
+    public static <T> List<T> stringToArray(String s, Class<T[]> clazz) {
+        T[] arr = new Gson().fromJson(s, clazz);
+        return Arrays.asList(arr); //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
     }
 
     public String sendData(String str){
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    .build();
 
             Request request = new Request.Builder()
-                    .url("http://192.168.31.187:8082/getUser")
+                    .url(str)
                     .get()
                     .build();
 
