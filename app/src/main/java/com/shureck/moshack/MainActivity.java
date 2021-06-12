@@ -1,50 +1,36 @@
 package com.shureck.moshack;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.rhexgomez.typer.roboto.TyperRoboto;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -58,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ArrayList<String> genresToSend;
     String str;
     Button button;
+    LinearLayout mainEventsContainer;
     int tappedButtons;
 
     private final OkHttpClient client = new OkHttpClient();
@@ -71,11 +58,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
+//        startActivity(intent);
 
 //        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolBarLayout.setTitle(getTitle());
+        toolBarLayout.setExpandedTitleColor(getResources().getColor(R.color.black));
+        toolBarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
+        toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
+        toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
+
+
+
+        mainEventsContainer = findViewById(R.id.mainEventContainer);
+
+        LayoutInflater mainEventsInflater = LayoutInflater.from(mainEventsContainer.getContext());
+
+        for (int i = 0; i < 5; i++) {
+            View eventView = mainEventsInflater.inflate(R.layout.element, null);
+            mainEventsContainer.addView(eventView);
+        }
     }
 
     @Override
@@ -97,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonContents = new ArrayList<>();
         genresToSend = new ArrayList<>();
 
-        buttonContents = SurveyHelper.fillSurveyContent();
         tappedButtons = 0;
 
         button.setOnClickListener(this);

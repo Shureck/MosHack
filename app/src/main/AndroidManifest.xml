@@ -34,7 +34,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_maps">
+            android:label="@string/my_afisha"
+            android:theme="@style/Theme.MosHack.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

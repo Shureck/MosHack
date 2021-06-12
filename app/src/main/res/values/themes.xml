@@ -29,4 +29,16 @@
         <item name="android:disabledAlpha">1</item>
         <item name="android:textColor">@color/dark_gray</item>
     </style>
+
+    <style name="Theme.MosHack.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MosHack.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MosHack.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
 </resources>
