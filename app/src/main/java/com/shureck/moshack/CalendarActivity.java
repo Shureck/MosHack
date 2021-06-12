@@ -77,7 +77,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
                 SimpleDateFormat sd = new SimpleDateFormat("d MMMM, EEEE");
                 textView.setText(sd.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
 
-                new IOAsyncTask().execute("http://192.168.31.187:8083/findByDate?page=0&size=10&date="+sdff.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
+                new IOAsyncTask().execute("http://192.168.31.187:8081/findByDate?page=0&size=10&date="+sdff.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
             }
         });
     }
