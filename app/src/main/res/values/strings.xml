@@ -5,4 +5,9 @@
     <string name="welcome_string">Добро пожаловать!</string>
     <string name="selection_string">Выберите до 5 любимых Вами жанров фильмов или книг:</string>
     <string name="next_string">Далее</string>
+
+    <string name="date">29 июня</string>
+    <string name="sphere">Спектакль</string>
+    <string name="free">Бесплатно</string>
+    <string name="event_name">«Прометей прикованный» в культурном центре «Новослободский»</string>
 </resources>
