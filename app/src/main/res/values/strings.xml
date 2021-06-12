@@ -46,4 +46,10 @@
     <string name="go_to_map_text">На карте</string>
     <string name="phone" tools:ignore="TypographyDashes">8-999-555-33-22</string>
 
+    <string name="planned">Предстоящие</string>
+    <string name="visited">Посещённые</string>
+
+    <string name="rate">Оценить</string>
+    <string name="rated">Оценено</string>
+
 </resources>

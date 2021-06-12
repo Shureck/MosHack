@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-//        Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, MyEventsActivity.class);
+        startActivity(intent);
 
 
 //        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
