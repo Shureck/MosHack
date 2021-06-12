@@ -12,4 +12,9 @@
     <string name="sphere">Спектакль</string>
     <string name="free">Бесплатно</string>
     <string name="event_name">«Прометей прикованный» в культурном центре «Новослободский»</string>
+
+    <string name="subs">Мои подписки</string>
+    <string name="channel_list">Список каналов</string>
+    <string name="channel_name">Спектакли</string>
+    <string name="channel_desc">Театральные постановки, пьесы…</string>
 </resources>
