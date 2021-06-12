@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, ChannelsActivity.class);
+        Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
         startActivity(intent);
 
 

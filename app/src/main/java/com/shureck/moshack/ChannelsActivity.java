@@ -3,16 +3,19 @@ package com.shureck.moshack;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class ChannelsActivity extends AppCompatActivity {
 
     LinearLayout subsList;
     LinearLayout channelsList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,5 +36,6 @@ public class ChannelsActivity extends AppCompatActivity {
             subsList.addView(subView);
             channelsList.addView(channelView);
         }
+
     }
 }
