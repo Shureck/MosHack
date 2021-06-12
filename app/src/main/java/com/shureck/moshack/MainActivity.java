@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,10 +26,13 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String strr;
 
-    GridLayout gridLayout;
-    ArrayList<View> surveyButtons;
-    ArrayList<Boolean> selectedGenres;
-    ArrayList<SurveyButtonContent> buttonContents;
-    ArrayList<String> genresToSend;
+    public GridLayout gridLayout;
+    public ArrayList<View> surveyButtons;
+    public ArrayList<Boolean> selectedGenres;
+    public ArrayList<SurveyButtonContent> buttonContents;
+    public ArrayList<String> genresToSend;
     String str;
     Button button;
     int tappedButtons;
@@ -63,13 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
         startActivity(intent);
 
-        button = findViewById(R.id.button);
-        gridLayout = findViewById(R.id.grid);
 
-        LayoutInflater inflater = LayoutInflater.from(gridLayout.getContext());
 
         selectedGenres = new ArrayList<>();
         buttonContents = new ArrayList<>();
@@ -78,19 +79,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonContents = SurveyHelper.fillSurveyContent();
         tappedButtons = 0;
 
-        button.setOnClickListener(this);
+        setData();
 
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    public void setData(){
+
+        button = findViewById(R.id.button);
+        gridLayout = findViewById(R.id.grid);
+
+        LayoutInflater inflater = LayoutInflater.from(gridLayout.getContext());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
+
+
+        button.setOnClickListener(this);
 
         surveyButtons = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             View newGenreButton = inflater.inflate(R.layout.element, null);
 
-            ImageButton genreImage = newGenreButton.findViewById(R.id.imageButton);
-            TextView genreName = newGenreButton.findViewById(R.id.imageText);
+            ImageView genreImage = newGenreButton.findViewById(R.id.eventImageView);
+            TextView dateTextView = newGenreButton.findViewById(R.id.dateTextView);
+            TextView sphereTextView = newGenreButton.findViewById(R.id.sphereTextView);
+            TextView freeTextView = newGenreButton.findViewById(R.id.freeTextView);
+            TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
 
+            String sss = "";
 
 //            imageLoader.loadImage("https://www.mos.ru/upload/newsfeed/afisha/images9wlNA3(2)(15).jpg", new SimpleImageLoadingListener() {
 //                @Override
@@ -99,8 +121,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    genreImage.setBackgroundDrawable(bitmapDrawable);
 //                }
 //            });
-            imageLoader.displayImage("https://www.mos.ru/upload/newsfeed/afisha/Yama_Samarin(9).jpg", genreImage);
-            genreName.setText(buttonContents.get(i).text);
+
+            imageLoader.displayImage("https://www.mos.ru/upload/newsfeed/afisha/87479468_3110278345663513_8879590124199870464_n(7).jpg", genreImage);
+
 
             surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
             selectedGenres.add(false);
@@ -109,12 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             gridLayout.addView(newGenreButton);
         }
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     public static void initImageLoader(Context context) {

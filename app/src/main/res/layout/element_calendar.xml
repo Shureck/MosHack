@@ -28,20 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/dateTextView"
-                android:id="@+id/eventImageView"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:minHeight="160dp"
-                android:minWidth="400dp"
-                app:srcCompat="@drawable/mock_image"
-                android:scaleType="centerCrop"
-                />
-
             <TextView
                 android:id="@+id/dateTextView"
                 app:layout_constraintStart_toStartOf="parent"
