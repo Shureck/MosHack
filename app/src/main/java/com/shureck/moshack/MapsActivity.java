@@ -21,12 +21,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
+        GoogleMap.OnMarkerClickListener,
         OnMapReadyCallback {
 
     public LocationManager locationManager;
@@ -57,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         map.setMyLocationEnabled(true);
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
+        map.setOnMarkerClickListener(this);
 
         Location location = getLastKnownLocation();
         if (location != null) {
@@ -66,6 +69,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             moment_loc = location;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+        map.addMarker(new MarkerOptions().position(new LatLng( 55.771585, 37.609092)).title("test")).setTag(0);
+        map.addMarker(new MarkerOptions().position(new LatLng( 55.771586, 37.609096)).title("Trans")).setTag(0);
     }
 
     @Override
@@ -80,6 +86,24 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
                 .show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
+        return false;
+    }
+
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        // Retrieve the data from the marker.
+        Integer clickCount = (Integer) marker.getTag();
+
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            marker.setTag(clickCount);
+            Toast.makeText(this,
+                    marker.getId() +
+                            " has been clicked " + clickCount + " times.",
+                    Toast.LENGTH_SHORT).show();
+        }
         return false;
     }
 
