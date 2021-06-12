@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+        Intent intent = new Intent(MainActivity.this, ChannelInfoActivity.class);
         startActivity(intent);
 
 //        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
