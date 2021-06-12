@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +29,18 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
     Button button;
     int tappedButtons;
 
+    LinearLayout linearLayout;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_calendar);
+
+        linearLayout = findViewById(R.id.eventContainer);
+
+        LayoutInflater inflater = LayoutInflater.from(linearLayout.getContext());
 
         CalendarView calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -55,48 +62,14 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         buttonContents = new ArrayList<>();
         genresToSend = new ArrayList<>();
 
-        buttonContents = SurveyHelper.fillSurveyContent();
+        //buttonContents = SurveyHelper.fillSurveyContent();
         tappedButtons = 0;
 
-        setData();
-    }
-
-    public void setData(){
-
-        button = findViewById(R.id.button);
-        gridLayout = findViewById(R.id.grid);
-
-        LayoutInflater inflater = LayoutInflater.from(gridLayout.getContext());
-
-        button.setOnClickListener(this);
-
-        surveyButtons = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            View newGenreButton = inflater.inflate(R.layout.element_calendar, null);
-
-            ImageView genreImage = newGenreButton.findViewById(R.id.eventImageView);
-            TextView dateTextView = newGenreButton.findViewById(R.id.dateTextView);
-            TextView sphereTextView = newGenreButton.findViewById(R.id.sphereTextView);
-            TextView freeTextView = newGenreButton.findViewById(R.id.freeTextView);
-            TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
-
-            String sss = "";
-
-//            imageLoader.loadImage("https://www.mos.ru/upload/newsfeed/afisha/images9wlNA3(2)(15).jpg", new SimpleImageLoadingListener() {
-//                @Override
-//                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), loadedImage);
-//                    genreImage.setBackgroundDrawable(bitmapDrawable);
-//                }
-//            });
-
-            surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
-            selectedGenres.add(false);
-
-            newGenreButton.findViewById(R.id.imageButton).setOnClickListener(this);
-
-            gridLayout.addView(newGenreButton);
+        for (int i = 0; i < 5; i++) {
+            View calendarEventView = inflater.inflate(R.layout.element_calendar, null);
+            linearLayout.addView(calendarEventView);
         }
+
     }
 
     @Override
