@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-//        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        startActivity(intent);
 
         button = findViewById(R.id.button);
         gridLayout = findViewById(R.id.grid);
