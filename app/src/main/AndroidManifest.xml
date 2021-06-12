@@ -47,6 +47,7 @@
         <activity android:name=".ChannelsActivity" />
         <activity android:name=".EventsActivity" />
         <activity android:name=".FullInfoActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>
