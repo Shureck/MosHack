@@ -37,6 +37,7 @@ public class FullInfoActivity extends AppCompatActivity {
 
     private final OkHttpClient client = new OkHttpClient();
     private String token;
+    String id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class FullInfoActivity extends AppCompatActivity {
         token = workWithToken.readToken();
 
         Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        id = intent.getStringExtra("id");
 
         System.out.println(id);
 
@@ -104,6 +105,15 @@ public class FullInfoActivity extends AppCompatActivity {
             }
         });
 
+        Button goButton = findViewById(R.id.goButton);
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("https://www.mos.ru/afisha/event/"+id));
+                startActivity(intent);
+            }
+        });
 
     }
 
