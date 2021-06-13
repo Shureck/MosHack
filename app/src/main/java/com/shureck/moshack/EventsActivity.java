@@ -2,7 +2,6 @@ package com.shureck.moshack;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -68,6 +65,7 @@ public class EventsActivity extends AppCompatActivity {
         ff = intent.getStringExtra("flag");
         msg = intent.getStringExtra("msg");
         System.out.println(tag);
+        Button button = findViewById(R.id.subscribeButton);
 
         button = findViewById(R.id.subscribeButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +121,24 @@ public class EventsActivity extends AppCompatActivity {
             button.setText("Подписаться");
         }
         flag = !flag;
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
+    }
+
+    void activateButton(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_gray);
+            textColor = getResources().getColor(R.color.dark_gray);
+        }
+
         Drawable buttonDrawable = button.getBackground();
         buttonDrawable = DrawableCompat.wrap(buttonDrawable);
         DrawableCompat.setTint(buttonDrawable, buttonColor);
