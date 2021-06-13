@@ -65,7 +65,7 @@ public class MyEventsActivity extends AppCompatActivity {
         LayoutInflater visitedEventsInflater = LayoutInflater
                 .from(visitedEventsContainer.getContext());
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=7&size=20");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=7&size=20");
     }
 
 

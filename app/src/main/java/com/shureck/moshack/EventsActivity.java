@@ -2,7 +2,10 @@ package com.shureck.moshack;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -45,7 +50,10 @@ public class EventsActivity extends AppCompatActivity {
     String tag;
     String ff;
     String msg;
+    Button button;
+    boolean flag = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +69,32 @@ public class EventsActivity extends AppCompatActivity {
         msg = intent.getStringExtra("msg");
         System.out.println(tag);
 
+        button = findViewById(R.id.subscribeButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeCarouselButtonDesign(button, flag);
+            }
+        });
+
         if(!ff.equals("4")){
-            Button button = findViewById(R.id.subscribeButton);
+
             button.setText("Отписаться");
+            int buttonColor, textColor;
+            buttonColor = getResources().getColor(R.color.light_gray);
+            textColor = getResources().getColor(R.color.dark_gray);
+
+            Drawable buttonDrawable = button.getBackground();
+            buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+            DrawableCompat.setTint(buttonDrawable, buttonColor);
+            button.setBackground(buttonDrawable);
+            button.setTextColor(textColor);
+            flag = true;
         }
         else{
             ImageView imageView = findViewById(R.id.subscribeCheck);
             imageView.setVisibility(View.INVISIBLE);
+            flag = false;
         }
 
         TextView mess = findViewById(R.id.channelDescFull);
@@ -76,7 +103,31 @@ public class EventsActivity extends AppCompatActivity {
         TextView top = findViewById(R.id.channelNameInfo);
         top.setText(tag);
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=80");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=80");
+    }
+
+    void changeCarouselButtonDesign(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (!activate) {
+            buttonColor = getResources().getColor(R.color.light_gray);
+            textColor = getResources().getColor(R.color.dark_gray);
+            ImageView imageView = findViewById(R.id.subscribeCheck);
+            imageView.setVisibility(View.VISIBLE);
+            button.setText("Отписаться");
+        } else {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+            ImageView imageView = findViewById(R.id.subscribeCheck);
+            imageView.setVisibility(View.INVISIBLE);
+            button.setText("Подписаться");
+        }
+        flag = !flag;
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
     }
 
     public void setData(List<Preview> previews){

@@ -92,7 +92,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = ll;
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=20");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=20");
 
     }
 
