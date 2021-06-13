@@ -23,8 +23,8 @@
                 android:id="@+id/profilePostPicCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:elevation="12dp"
                 app:cardCornerRadius="40dp"
                 android:layout_centerHorizontal="true"
@@ -78,7 +78,10 @@
                 app:layout_constraintTop_toBottomOf="@id/profilePostPicCard"
                 android:text="@string/full_post_header"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/fullPostImageCardView"
@@ -114,7 +117,10 @@
                 app:layout_constraintTop_toBottomOf="@id/fullPostImageCardView"
                 android:text="@string/full_post_text"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
 
             <View
                 android:id="@+id/divider"
@@ -123,9 +129,11 @@
                 android:background="?android:attr/listDivider"
                 app:layout_constraintTop_toBottomOf="@id/fullPostText"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"/>
 
             <TextView
+                android:layout_marginTop="8dp"
                 android:id="@+id/pinnedEventsHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,6 +145,7 @@
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/main_blue"
                 android:textStyle="bold"
+                android:textSize="18sp"
                 />
 
             <LinearLayout
@@ -146,7 +155,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pinnedEventsHeader">
+                app:layout_constraintTop_toBottomOf="@id/pinnedEventsHeader"
+                android:layout_marginTop="8dp">
 
 
             </LinearLayout>
@@ -158,7 +168,8 @@
                 android:background="?android:attr/listDivider"
                 app:layout_constraintTop_toBottomOf="@id/pinnedEventsContainer"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginEnd="16dp"
+                />
 
             <ImageView
                 android:id="@+id/fullPostLikeIcon"
@@ -167,7 +178,8 @@
                 android:src="@drawable/ic_round_favorite_border_24"
                 app:layout_constraintEnd_toStartOf="@id/fullPostLikeCount"
                 app:layout_constraintTop_toTopOf="@id/fullPostLikeCount"
-                app:layout_constraintBottom_toBottomOf="@id/fullPostLikeCount"/>
+                app:layout_constraintBottom_toBottomOf="@id/fullPostLikeCount"
+                android:layout_marginEnd="4dp"/>
 
             <TextView
                 android:id="@+id/fullPostLikeCount"
@@ -177,6 +189,9 @@
                 app:layout_constraintEnd_toStartOf="@id/fullPostComIcon"
                 android:text="@string/likes_num"
                 android:textSize="22sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:paddingBottom="2dp"
                 />
 
             <ImageView
@@ -187,6 +202,8 @@
                 app:layout_constraintEnd_toStartOf="@id/fullPostComCount"
                 app:layout_constraintTop_toTopOf="@id/fullPostComCount"
                 app:layout_constraintBottom_toBottomOf="@id/fullPostComCount"
+                android:layout_marginEnd="6dp"
+
                 />
 
             <TextView
@@ -198,6 +215,8 @@
                 android:text="@string/coms_num"
                 android:layout_marginEnd="16dp"
                 android:textSize="22sp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="2dp"
                 />
 
             <TextView
@@ -209,7 +228,23 @@
                 android:text="@string/comments_header"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fullPostLikeCount"/>
+                app:layout_constraintTop_toBottomOf="@id/fullPostLikeCount"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:id="@+id/commentsContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fullPostCommentsHeader"
+                android:layout_marginTop="8dp">
+
+
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
