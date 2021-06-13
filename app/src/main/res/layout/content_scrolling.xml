@@ -34,8 +34,14 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:textAllCaps="false"
+                style="@style/BigButtonThemeActive"
+                android:backgroundTint="@color/category_red"
+                android:textAlignment="textStart"
+                android:drawableLeft="@drawable/ic_round_category_48"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 />
 
             <Button
@@ -48,9 +54,15 @@
                 android:text="@string/calendar"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:layout_marginEnd="16dp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                style="@style/BigButtonThemeActive"
+                android:backgroundTint="@color/category_blue"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_round_today_48"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/favButton"
@@ -63,8 +75,14 @@
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:textAllCaps="false"/>
+                android:layout_marginEnd="6dp"
+                android:textAllCaps="false"
+                style="@style/BigButtonThemeActive"
+                android:backgroundTint="@color/category_violet"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_round_bookmark_added_48"
+                android:textAlignment="textStart"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/mapButton"
@@ -76,19 +94,41 @@
                 android:text="@string/near_events"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:layout_marginEnd="16dp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                style="@style/BigButtonThemeActive"
+                android:backgroundTint="@color/category_pink"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/ic_round_map_48"
+                android:textAlignment="textStart"
+                android:textStyle="bold"/>
 
         </GridLayout>
 
+        <TextView
+            android:id="@+id/carouselHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/buttonsContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/events"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"/>
+
         <HorizontalScrollView
+            android:layout_marginTop="4dp"
             android:id="@+id/carouselContainer"
             android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonsContainer"
+            app:layout_constraintTop_toBottomOf="@id/carouselHeader"
             app:layout_constraintStart_toStartOf="parent"
             >
 
@@ -103,35 +143,55 @@
                     android:text="@string/button_all"
                     android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/SmallButtonThemeInactive"
+                    android:backgroundTint="@color/main_blue"
+                    android:textColor="@color/white"
+                    />
 
                 <Button
                     android:id="@+id/buttonSubs"
                     android:text="@string/button_subs"
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/SmallButtonThemeInactive"
+                    />
 
                 <Button
                     android:id="@+id/buttonRec"
                     android:text="@string/button_rec"
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/SmallButtonThemeInactive"
+                    />
 
                 <Button
-                    android:id="@+id/buttonNear"
-                    android:text="@string/button_near"
+                    android:id="@+id/forKids"
+                    android:text="@string/for_kids"
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"/>
+                    style="@style/SmallButtonThemeInactive"
+                    />
+
+                <Button
+                    android:id="@+id/inclusive"
+                    android:text="@string/inclusive"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    style="@style/SmallButtonThemeInactive"
+                    />
 
             </LinearLayout>
 
         </HorizontalScrollView>
         
         <LinearLayout
+            android:layout_marginTop="16dp"
             android:id="@+id/mainEventContainer"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/carouselContainer"

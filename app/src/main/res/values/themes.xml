@@ -22,6 +22,17 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+
+
+    <style name="SmallButtonThemeInactive" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+        <item name="cornerRadius">36dp</item>
+        <item name="backgroundTint">@color/light_blue</item>
+        <item name="android:disabledAlpha">1</item>
+        <item name="android:textColor">@color/main_blue</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="BigButtonThemeInactive" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
         <item name="cornerRadius">8dp</item>
