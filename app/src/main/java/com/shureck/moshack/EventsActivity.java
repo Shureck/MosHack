@@ -2,7 +2,6 @@ package com.shureck.moshack;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -19,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -34,8 +32,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class EventsActivity extends AppCompatActivity {
@@ -108,6 +108,7 @@ public class EventsActivity extends AppCompatActivity {
 
     void changeCarouselButtonDesign(Button button, boolean activate) {
 
+        new IOAsyncPostTask().execute("http://192.168.31.187:8083/user/userSubscription?sphere="+tag);
         int buttonColor, textColor;
         if (!activate) {
             buttonColor = getResources().getColor(R.color.light_gray);
@@ -128,6 +129,7 @@ public class EventsActivity extends AppCompatActivity {
         DrawableCompat.setTint(buttonDrawable, buttonColor);
         button.setBackground(buttonDrawable);
         button.setTextColor(textColor);
+
     }
 
     public void setData(List<Preview> previews){
@@ -227,6 +229,36 @@ public class EventsActivity extends AppCompatActivity {
                     .url(str)
                     .header("Authorization","Bearer "+token)
                     .get()
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    class IOAsyncPostTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            return sendPostData(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+        }
+    }
+    public String sendPostData(String str){
+        try {
+            RequestBody formBody = new FormBody.Builder()
+                    .add("lol", "check")
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(str)
+                    .header("Authorization","Bearer "+token)
+                    .post(formBody)
                     .build();
 
             Response response = client.newCall(request).execute();
