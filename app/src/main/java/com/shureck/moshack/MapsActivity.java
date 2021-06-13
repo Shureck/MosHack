@@ -109,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         Location location = getLastKnownLocation();
         if (location != null) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 11);
             mMap.animateCamera(cameraUpdate);
             moment_loc = location;
         }

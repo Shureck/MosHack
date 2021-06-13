@@ -1,8 +1,13 @@
 package com.shureck.moshack;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,10 +18,14 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -37,6 +46,8 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -57,11 +68,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView rv;
     private String token;
 
+    LocationManager locationManager;
+    String provider;
+    private final int REQUEST_LOCATION_PERMISSION = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        provider = locationManager.getBestProvider(new Criteria(), false);
+
+        requestLocationPermission();
 
         WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
         token = workWithToken.readToken();
@@ -115,6 +136,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
+    public void requestLocationPermission() {
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+        if(EasyPermissions.hasPermissions(this, perms)) {
+            //Toast.makeText(this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
+        }
+    }
+
     public void setData(List<Preview> previews){
 
         mainEventsContainer = findViewById(R.id.mainEventContainer);
@@ -145,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             freeTextView.setText(previews.get(i).free.toString());
 
             SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
+            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp)*1000)));
 
             if (previews.get(i).free){
                 freeTextView.setText("Бесплатно");
@@ -206,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         T[] arr = new Gson().fromJson(s, clazz);
         return Arrays.asList(arr); //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
     }
+
 
     public String sendData(String str){
         try {
