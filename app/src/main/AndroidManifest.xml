@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MosHack.NoActionBar">
-        <activity android:name=".MyChannelActivity"></activity>
+        <activity android:name=".NewPostAddEventActivity"></activity>
+        <activity android:name=".NewPostActivity" />
+        <activity android:name=".MyChannelActivity" />
         <activity android:name=".SurveyActivity" />
         <activity android:name=".MyEventsActivity" />
         <activity android:name=".ChannelInfoActivity" />
