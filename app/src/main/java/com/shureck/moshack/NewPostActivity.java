@@ -114,7 +114,7 @@ public class NewPostActivity extends AppCompatActivity {
             postModel.text = postText.getText().toString();
             postModel.title = postHeader.getText().toString();
             postModel.itemId = list.stream().map(Integer::parseInt).collect(Collectors.toList());
-            postModel.jpgUrl = Arrays.asList(postImage.getText().toString().split("\\ "));
+            postModel.jpgUrl = postImage.getText().toString().split("\\ ")[0];
 
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             RequestBody body = RequestBody.create(JSON, new Gson().toJson(postModel));
