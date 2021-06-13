@@ -53,7 +53,7 @@ public class FullInfoActivity extends AppCompatActivity {
 
         System.out.println(id);
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/putIntem?id="+id);
+        new IOAsyncTask().execute("http://192.168.31.187:8083/putItem?id="+id);
     }
 
     public void setData(FullData previews){

@@ -1,5 +1,6 @@
 package com.shureck.moshack;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -38,6 +39,8 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List cards;
     private RecyclerView rv;
     private String token;
+    private final int REQUEST_LOCATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
         token = workWithToken.readToken();
-
+        System.out.println("Token "+token);
 
         if(token == null || token.equals("")) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -94,11 +98,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
             toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
           
-            new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=10");
         }
 
         currentCarouselButton = findViewById(R.id.buttonAll);
         currentButtonId = currentCarouselButton.getId();
+        requestLocationPermission();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
+    public void requestLocationPermission() {
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
+        if(EasyPermissions.hasPermissions(this, perms)) {
+        }
+        else {
+            EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
+        }
     }
 
     void changeCarouselButtonDesign(Button button, boolean activate) {

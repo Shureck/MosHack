@@ -49,7 +49,7 @@ public class ChannelsActivity extends AppCompatActivity {
         token = workWithToken.readToken();
 
         setData();
-        //new IOAsyncTask().onPostExecute("http://192.168.31.187:8083/user/putSphere");
+        //new IOAsyncTask().onPostExecute("http://192.168.31.187:8083/putSphere");
     }
 
     class IOAsyncTask extends AsyncTask<String, Void, String> {

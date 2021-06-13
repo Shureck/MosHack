@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,13 +39,28 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText login = findViewById(R.id.login);
         EditText pass = findViewById(R.id.pass);
-        Button button2 = findViewById(R.id.button2);
+        Button reg = findViewById(R.id.button2);
         WorkWithToken workWithToken = new WorkWithToken(LoginActivity.this);
-
-        button2.setOnClickListener(new View.OnClickListener() {
+        Button log = findViewById(R.id.button);
+        reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new IOAsyncTask().execute(new String[]{"http://192.168.31.187:8083/register", login.getText().toString(), pass.getText().toString()});
+            }
+        });
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IOAsyncTask().execute(new String[]{"http://192.168.31.187:8083/auth", login.getText().toString(), pass.getText().toString()});
+            }
+        });
+        TextView textView = findViewById(R.id.textView);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                workWithToken.saveToken("Free");
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
