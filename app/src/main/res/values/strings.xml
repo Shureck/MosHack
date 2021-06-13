@@ -41,9 +41,9 @@
     <string name="events">Лента событий</string>
 
     <string name="button_all">Всё</string>
-    <string name="button_subs">Подписки</string>
-    <string name="button_rec">Рекомендации</string>
-    <string name="for_kids">Для детей</string>
+    <string name="button_subs">Выставки</string>
+    <string name="button_rec">Для детей</string>
+    <string name="for_kids">Рекомендации</string>
     <string name="inclusive">Доступная среда</string>
 
     <string name="place_name">Культурный центр «Новослободский»</string>

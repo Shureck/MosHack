@@ -66,7 +66,7 @@ public class EventsActivity extends AppCompatActivity {
         tag = intent.getStringExtra("tag");
         ff = intent.getStringExtra("flag");
         msg = intent.getStringExtra("msg");
-        System.out.println(tag);
+        System.out.println(tag+" "+ff+" "+msg);
 
         button = findViewById(R.id.subscribeButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +102,7 @@ public class EventsActivity extends AppCompatActivity {
         TextView top = findViewById(R.id.channelNameInfo);
         top.setText(tag);
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=80");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=500");
     }
 
     void changeCarouselButtonDesign(Button button, boolean activate) {
@@ -264,6 +264,7 @@ public class EventsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String response) {
+            System.out.println("Return "+response);
         }
     }
     public String sendPostData(String str){
