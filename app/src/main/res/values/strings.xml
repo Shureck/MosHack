@@ -74,4 +74,12 @@
     <string name="sphere_question">Какие мероприятия вам интересны? (до 5 вариантов)</string>
     <string name="go_next">Продолжить</string>
 
+    <!-- New post activity -->
+    <string name="new_post_header">Новый пост</string>
+    <string name="pin_image">Картинка</string>
+    <string name="pin_event">Событие</string>
+    <string name="publish">Запостить</string>
+    <string name="post_header">Заголовок поста</string>
+    <string name="post_text">Введите текст поста</string>
+
 </resources>
