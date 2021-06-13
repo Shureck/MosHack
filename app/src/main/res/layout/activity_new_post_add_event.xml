@@ -34,6 +34,22 @@
                 app:layout_constraintBottom_toTopOf="@id/pinSearchEvent"
                 />
 
+            <Button
+                android:id="@+id/buttonPinBackEvent"
+                style="@style/SmallButtonThemeInactive"
+                android:layout_width="189dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white_gray"
+                android:text="@string/pin_back_event"
+                android:textColor="@color/dark_gray"
+                app:layout_constraintBottom_toTopOf="@+id/pinSearchEvent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addEventHeader" />
+
             <EditText
                 android:id="@+id/pinSearchEvent"
                 android:layout_width="match_parent"

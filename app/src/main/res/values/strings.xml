@@ -78,6 +78,7 @@
     <string name="new_post_header">Новый пост</string>
     <string name="pin_image">Картинка</string>
     <string name="pin_event">Доб. событие</string>
+    <string name="pin_back_event">К редактированию</string>
     <string name="publish">Опубликовать</string>
     <string name="post_header">Заголовок поста</string>
     <string name="post_image">Ссылки на картинки к посту</string>

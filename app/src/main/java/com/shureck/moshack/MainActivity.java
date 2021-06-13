@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String strr;
 
-    public GridLayout gridLayout;
     public ArrayList<View> surveyButtons;
     public ArrayList<Boolean> selectedGenres;
     public ArrayList<SurveyButtonContent> buttonContents;
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout mainEventsContainer;
     int tappedButtons;
 
-    String currentCategory;
     int currentButtonId;
     Button currentCarouselButton;
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
         token = workWithToken.readToken();
-        System.out.println("Token "+token);
+        System.out.println("Token " + token);
 
         Intent intentTest = new Intent(MainActivity.this, NewPostActivity.class);
         startActivity(intentTest);
