@@ -1,5 +1,6 @@
 package com.shureck.moshack;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,8 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
     Button button;
     int tappedButtons;
 
+    private String token;
+
     LinearLayout linearLayout;
     private final OkHttpClient client = new OkHttpClient();
 
@@ -50,6 +53,9 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_calendar);
+
+        WorkWithToken workWithToken = new WorkWithToken(CalendarActivity.this);
+        token = workWithToken.readToken();
 
         TextView textView = findViewById(R.id.calendarToday);
 
@@ -62,7 +68,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         textView.setText(sd.format(date.getTime().getTime()));
 
         SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd");
-        new IOAsyncTask().execute("http://192.168.31.187:8083/findByDate?page=0&size=10&date="+sdff.format(date.getTime().getTime()));
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/findByDate?page=0&size=10&date="+sdff.format(date.getTime().getTime()));
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -77,7 +83,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
                 SimpleDateFormat sd = new SimpleDateFormat("d MMMM, EEEE");
                 textView.setText(sd.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
 
-                new IOAsyncTask().execute("http://192.168.31.187:8081/findByDate?page=0&size=10&date="+sdff.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
+                new IOAsyncTask().execute("http://192.168.31.187:8083/user/findByDate?page=0&size=10&date="+sdff.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
             }
         });
     }
@@ -119,10 +125,25 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
             TextView calendarEventTime = calendarEventView.findViewById(R.id.calendarEventTime);
 
             calendarEventSphere.setText(previews.get(i).sphere.get(0));
-            calendarEventFree.setText(previews.get(i).free.toString());
+
+            if (previews.get(i).free){
+                calendarEventFree.setText("Бесплатно");
+            }
+            else {
+                calendarEventFree.setText("");
+            }
+
             calendarEventName.setText(previews.get(i).title);
             calendarEventTime.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
-
+            calendarEventView.setId(previews.get(i).idItem);
+            calendarEventView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CalendarActivity.this, FullInfoActivity.class);
+                    intent.putExtra("id", String.valueOf(v.getId()));
+                    startActivity(intent);
+                }
+            });
             linearLayout.addView(calendarEventView);
         }
     }
@@ -156,6 +177,7 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
 
             Request request = new Request.Builder()
                     .url(str)
+                    .header("Authorization","Bearer "+token)
                     .get()
                     .build();
 

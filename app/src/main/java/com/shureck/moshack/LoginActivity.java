@@ -1,5 +1,6 @@
 package com.shureck.moshack;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -11,11 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -39,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new IOAsyncTask().execute(new String[]{"url", login.getText().toString(), pass.getText().toString()});
+                new IOAsyncTask().execute(new String[]{"http://192.168.31.187:8083/register", login.getText().toString(), pass.getText().toString()});
             }
         });
 
@@ -49,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
     class IOAsyncTask extends AsyncTask<String, Void, String> {
 
+        WorkWithToken workWithToken = new WorkWithToken(LoginActivity.this);
+
         @Override
         protected String doInBackground(String... params) {
             return sendData(params[0],params[1],params[2]);
@@ -57,9 +64,24 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String response) {
             String strr = response;
-            Gson gson = new Gson();
-            List<Preview> previews = stringToArray(strr, Preview[].class);
-            System.out.println("DDD "+previews.get(0).date);
+            System.out.println("Login "+strr);
+            String previews = "";
+//            Gson gson = new Gson();
+//            LoginModel previews = gson.fromJson(strr, LoginModel.class);
+            try {
+                JSONObject jsonObj = new JSONObject(strr);
+                previews = jsonObj.getString("token");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("DDD "+previews);
+
+            if(previews.equals("")) {
+                workWithToken.saveToken(previews);
+            }
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -70,10 +92,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public String sendData(String str, String login, String pass){
         try {
-            RequestBody formBody = new FormBody.Builder()
-                    .add("login", login)
-                    .add("pass", pass)
-                    .build();
+            final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+            RequestBody formBody = RequestBody.create(JSON, "{\"login\": \""+login+"\",\n" +
+                    "\"password\": \""+pass+"\"\n" +"}");
 
             Request request = new Request.Builder()
                     .url(str)

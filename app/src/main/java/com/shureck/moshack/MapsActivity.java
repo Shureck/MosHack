@@ -8,10 +8,12 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,6 +39,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     int tappedButtons;
 
     GoogleMap mMap;
+    private String token;
 
     public LocationManager locationManager;
     public LocationListener locationListener;
@@ -74,6 +79,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        WorkWithToken workWithToken = new WorkWithToken(MapsActivity.this);
+        token = workWithToken.readToken();
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -81,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = ll;
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
 
     }
 
@@ -223,10 +231,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         initImageLoader(getApplicationContext());
 
         selectedGenres = new ArrayList<>();
-        buttonContents = new ArrayList<>();
         genresToSend = new ArrayList<>();
 
-        buttonContents = SurveyHelper.fillSurveyContent();
         tappedButtons = 0;
 
         button.setOnClickListener(this);
@@ -242,9 +248,18 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
 
             imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
-            dateTextView.setText(previews.get(i).date);
             sphereTextView.setText(previews.get(i).sphere.get(0));
-            //freeTextView.setText(previews.get(i);
+            freeTextView.setText(previews.get(i).free.toString());
+
+            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
+            dateTextView.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
+
+            if (previews.get(i).free){
+                freeTextView.setText("Бесплатно");
+            }
+            else {
+                freeTextView.setText("");
+            }
             eventHeader.setText(previews.get(i).title);
 
 
@@ -252,6 +267,15 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             selectedGenres.add(false);
 
             newGenreButton.findViewById(R.id.imageButton).setOnClickListener(this);
+            newGenreButton.setId(previews.get(i).idItem);
+            newGenreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MapsActivity.this, FullInfoActivity.class);
+                    intent.putExtra("id", String.valueOf(v.getId()));
+                    startActivity(intent);
+                }
+            });
 
             mMap.addMarker(new MarkerOptions().position(new LatLng(previews.get(i).lat, previews.get(i).lon)).title(previews.get(i).title)).setTag(0);
 
@@ -272,6 +296,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
 
             Request request = new Request.Builder()
                     .url(str)
+                    .header("Authorization","Bearer "+token)
                     .get()
                     .build();
 

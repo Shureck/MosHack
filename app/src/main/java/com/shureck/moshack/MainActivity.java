@@ -2,6 +2,8 @@ package com.shureck.moshack;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +28,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhexgomez.typer.roboto.TyperRoboto;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ArrayList<SurveyButtonContent> buttonContents;
     public ArrayList<String> genresToSend;
     String str;
-    Button button;
     LinearLayout mainEventsContainer;
     int tappedButtons;
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private List cards;
     private RecyclerView rv;
+    private String token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,13 +63,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
+        WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
+        token = workWithToken.readToken();
 
+        if(token.equals("")) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+
+//        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
 
 //        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+
 //        startActivity(intent);
-
-
-//        new IOAsyncTask().execute("http://192.168.31.187:8083/preview");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,29 +88,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
         toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
 
-
-
-        mainEventsContainer = findViewById(R.id.mainEventContainer);
-
-        LayoutInflater mainEventsInflater = LayoutInflater.from(mainEventsContainer.getContext());
-
-        for (int i = 0; i < 5; i++) {
-            View eventView = mainEventsInflater.inflate(R.layout.element, null);
-            mainEventsContainer.addView(eventView);
-        }
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.categoriesButton:
+                Intent intent = new Intent(MainActivity.this, ChannelsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.calendarButton:
+                Intent intent1 = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.favButton:
 
+                break;
+            case R.id.mapButton:
+                Intent intent3 = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent3);
+                break;
+        }
     }
 
     public void setData(List<Preview> previews){
 
-        button = findViewById(R.id.button);
-        gridLayout = findViewById(R.id.grid);
+        mainEventsContainer = findViewById(R.id.mainEventContainer);
 
-        LayoutInflater inflater = LayoutInflater.from(gridLayout.getContext());
+        LayoutInflater inflater = LayoutInflater.from(mainEventsContainer.getContext());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
@@ -108,8 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         genresToSend = new ArrayList<>();
 
         tappedButtons = 0;
-
-        button.setOnClickListener(this);
 
         surveyButtons = new ArrayList<>();
         for (int i=0; i<previews.size(); i++) {
@@ -122,18 +139,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
 
             imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
-            dateTextView.setText(previews.get(i).date);
             sphereTextView.setText(previews.get(i).sphere.get(0));
-            //freeTextView.setText(previews.get(i);
+            freeTextView.setText(previews.get(i).free.toString());
+
+            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
+            dateTextView.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
+
+            if (previews.get(i).free){
+                freeTextView.setText("Бесплатно");
+            }
+            else {
+                freeTextView.setText("");
+            }
             eventHeader.setText(previews.get(i).title);
 
-
-            surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
-            selectedGenres.add(false);
-
-            newGenreButton.findViewById(R.id.imageButton).setOnClickListener(this);
-
-            gridLayout.addView(newGenreButton);
+            newGenreButton.setId(previews.get(i).idItem);
+            newGenreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, FullInfoActivity.class);
+                    intent.putExtra("id", String.valueOf(v.getId()));
+                    startActivity(intent);
+                }
+            });
+            mainEventsContainer.addView(newGenreButton);
         }
     }
 
@@ -184,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Request request = new Request.Builder()
                     .url(str)
+                    .header("Authorization","Bearer "+token)
                     .get()
                     .build();
 
