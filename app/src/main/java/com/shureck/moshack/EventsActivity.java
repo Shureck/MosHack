@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -68,6 +67,7 @@ public class EventsActivity extends AppCompatActivity {
         ff = intent.getStringExtra("flag");
         msg = intent.getStringExtra("msg");
         System.out.println(tag);
+        Button button = findViewById(R.id.subscribeButton);
 
         button = findViewById(R.id.subscribeButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +130,24 @@ public class EventsActivity extends AppCompatActivity {
         button.setBackground(buttonDrawable);
         button.setTextColor(textColor);
 
+    }
+
+    void activateButton(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_gray);
+            textColor = getResources().getColor(R.color.dark_gray);
+        }
+
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
     }
 
     public void setData(List<Preview> previews){

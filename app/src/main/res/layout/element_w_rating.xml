@@ -34,7 +34,7 @@
                 android:layout_height="160dp"
                 android:minHeight="160dp"
                 android:minWidth="400dp"
-                app:srcCompat="@drawable/mock_image"
+                app:srcCompat="@color/white_gray"
                 android:scaleType="centerCrop"
                 />
 

@@ -31,10 +31,10 @@
                 app:layout_constraintBottom_toTopOf="@id/dateTextView"
                 android:id="@+id/eventImageView"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:minHeight="160dp"
+                android:layout_height="120dp"
+                android:minHeight="120dp"
                 android:minWidth="400dp"
-                app:srcCompat="@drawable/mock_image"
+                app:srcCompat="@color/white_gray"
                 android:scaleType="centerCrop"
                 />
 
