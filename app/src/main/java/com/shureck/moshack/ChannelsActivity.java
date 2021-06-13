@@ -1,6 +1,7 @@
 package com.shureck.moshack;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -28,12 +31,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ChannelsActivity extends AppCompatActivity {
+public class ChannelsActivity extends AppCompatActivity implements View.OnClickListener{
 
     LinearLayout subsList;
     LinearLayout channelsList;
 
     String strr;
+    String username;
+    Button currentCarouselButton;
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -48,8 +53,55 @@ public class ChannelsActivity extends AppCompatActivity {
         WorkWithToken workWithToken = new WorkWithToken(ChannelsActivity.this);
         token = workWithToken.readToken();
 
-        setData();
-        //new IOAsyncTask().onPostExecute("http://192.168.31.187:8083/putSphere");
+        CardView myChannelCard = findViewById(R.id.myChannelCard);
+        myChannelCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChannelsActivity.this, MyChannelActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
+
+        currentCarouselButton = findViewById(R.id.catButton);
+
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/putSphere");
+    }
+
+
+
+    void changeCarouselButtonDesign(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_blue);
+            textColor = getResources().getColor(R.color.main_blue);
+        }
+
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.catButton:
+                break;
+
+            case R.id.authorsButton:
+                break;
+        }
+
+        changeCarouselButtonDesign(currentCarouselButton, false);
+        currentCarouselButton = (Button) v;
+        changeCarouselButtonDesign(currentCarouselButton, true);
     }
 
     class IOAsyncTask extends AsyncTask<String, Void, String> {
@@ -63,25 +115,19 @@ public class ChannelsActivity extends AppCompatActivity {
         protected void onPostExecute(String response) {
             strr = response;
             Gson gson = new Gson();
-            List<Preview> previews = stringToArray(strr, Preview[].class);
-            System.out.println("DDD "+previews.get(0).date);
-            //setData(previews);
+            SphereModel previews = gson.fromJson(strr, SphereModel.class);
+            System.out.println("DDD "+previews.userName);
+            setData(previews);
         }
     }
 
-    private void setData() {
+    private void setData(SphereModel previews) {
         channelsList = findViewById(R.id.channelsContainer);
 
         LayoutInflater channelsInflater = LayoutInflater.from(channelsList.getContext());
-
-        String[] s = {"Спектакли","Экскурсии","Выставки"};
-        int[] st = {11, 7, 10};
-        String[] ss = {"Концерты","Для детей","Лекции","Мастер-классы","Кино"};
-        int[] sst = {18, 5, 3, 17, 6};
-
         Random random = new Random();
-
-        for (int i = 0; i < 5; i++) {
+        username = previews.userName;
+        for (int i = 0; i < previews.sphere.size(); i++) {
             View channelView = channelsInflater.inflate(R.layout.channel_item, null);
             ImageView check = channelView.findViewById(R.id.checkSub);
             check.setVisibility(View.INVISIBLE);
@@ -89,8 +135,8 @@ public class ChannelsActivity extends AppCompatActivity {
             TextView channelName = channelView.findViewById(R.id.channelName);
             TextView channelDesc = channelView.findViewById(R.id.channelDesc);
 
-            channelName.setText(ss[i]);
-            channelDesc.setText(sst[i]+" мероприятий");
+            channelName.setText(previews.sphere.get(i));
+            channelDesc.setText(random.nextInt(15)+5+" мероприятий");
 
             channelView.setOnClickListener(new View.OnClickListener() {
                 @Override

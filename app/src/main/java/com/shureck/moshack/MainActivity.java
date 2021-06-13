@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView rv;
     private String token;
     private final int REQUEST_LOCATION_PERMISSION = 1;
+    String tag = "def";
+    String count = "20";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 //                Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
 
-        Intent intent = new Intent(MainActivity.this, ChannelsActivity.class);
-        startActivity(intent);
+//            Intent intent = new Intent(MainActivity.this, ChannelsActivity.class);
+//            startActivity(intent);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
             toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
           
-            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=10");
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=3&size="+count);
         }
 
         currentCarouselButton = findViewById(R.id.buttonAll);
@@ -166,6 +168,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 changeCarouselButtonDesign(currentCarouselButton, false);
                 currentCarouselButton = (Button) v;
                 changeCarouselButtonDesign(currentCarouselButton, true);
+                if (((Button) v).getText().equals("Всё")){
+                    tag = "def";
+                    String count = "20";
+                    mainEventsContainer.removeAllViews();
+                    new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=2&size="+count);
+                }
+                else{
+                    tag = ((Button) v).getText().toString();
+                    String count = "100";
+                    mainEventsContainer.removeAllViews();
+                    new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size="+count);
+                }
                 break;
         }
     }
@@ -195,31 +209,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView freeTextView = newGenreButton.findViewById(R.id.freeTextView);
             TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
 
-            imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
-            sphereTextView.setText(previews.get(i).sphere.get(0));
-            freeTextView.setText(previews.get(i).free.toString());
+            if(tag.equals("def") || previews.get(i).sphere.get(0).equals(tag) || previews.get(i).sphere.size()>1 && previews.get(i).sphere.get(1).equals(tag)) {
 
-            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
+                imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
+                sphereTextView.setText(previews.get(i).sphere.get(0));
+                freeTextView.setText(previews.get(i).free.toString());
 
-            if (previews.get(i).free){
-                freeTextView.setText("Бесплатно");
-            }
-            else {
-                freeTextView.setText("");
-            }
-            eventHeader.setText(previews.get(i).title);
+                SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
+                dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
 
-            newGenreButton.setId(previews.get(i).idItem);
-            newGenreButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, FullInfoActivity.class);
-                    intent.putExtra("id", String.valueOf(v.getId()));
-                    startActivity(intent);
+                if (previews.get(i).free) {
+                    freeTextView.setText("Бесплатно");
+                } else {
+                    freeTextView.setText("");
                 }
-            });
-            mainEventsContainer.addView(newGenreButton);
+                eventHeader.setText(previews.get(i).title);
+
+                newGenreButton.setId(previews.get(i).idItem);
+                newGenreButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, FullInfoActivity.class);
+                        intent.putExtra("id", String.valueOf(v.getId()));
+                        startActivity(intent);
+                    }
+                });
+                mainEventsContainer.addView(newGenreButton);
+            }
         }
     }
 
