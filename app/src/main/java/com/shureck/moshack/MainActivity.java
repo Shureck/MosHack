@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         token = workWithToken.readToken();
         System.out.println("Token "+token);
 
-        Intent intentTest = new Intent(MainActivity.this, NewPostActivity.class);
-        startActivity(intentTest);
+//        Intent intentTest = new Intent(MainActivity.this, NewPostActivity.class);
+//        startActivity(intentTest);
 
 
         if(token == null || token.equals("")) {
