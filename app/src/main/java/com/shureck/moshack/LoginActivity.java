@@ -71,14 +71,10 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObj = new JSONObject(strr);
                 previews = jsonObj.getString("token");
+                System.out.println("DDD "+previews);
+                workWithToken.saveToken(previews);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
-
-            System.out.println("DDD "+previews);
-
-            if(previews.equals("")) {
-                workWithToken.saveToken(previews);
             }
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);

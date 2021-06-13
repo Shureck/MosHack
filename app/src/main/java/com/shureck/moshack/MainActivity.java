@@ -70,10 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
         token = workWithToken.readToken();
 
-//        if(token.equals("")) {
-//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//            startActivity(intent);
-        //}
+
+        if(token == null || token.equals("")) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        else {
 
 
 //        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
@@ -83,19 +85,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        startActivity(intent);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle(getTitle());
-        toolBarLayout.setExpandedTitleColor(getResources().getColor(R.color.black));
-        toolBarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
-        toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
-        toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+            toolBarLayout.setTitle(getTitle());
+            toolBarLayout.setExpandedTitleColor(getResources().getColor(R.color.black));
+            toolBarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
+            toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
+            toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
+          
+            new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
+        }
 
         currentCarouselButton = findViewById(R.id.buttonAll);
         currentButtonId = currentCarouselButton.getId();
-
-        // new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
     }
 
     void changeCarouselButtonDesign(Button button, boolean activate) {
