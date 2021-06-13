@@ -93,4 +93,17 @@
     <string name="short_info_sphere">Выставка</string>
     <string name="short_info_free">Бесплатно</string>
 
+    <!-- Full post activity -->
+    <string name="full_post_header">Уличные выставки на выходных</string>
+    <string name="full_post_text">В городе проводится много разных уличных выставок, некоторые из
+        которых не обойдёшь стороной. Это и различные исторические, и художественные выставки.
+        Собрал свою личную подборку с выставками, которые мне кажутся наиболее интересными и которые можно
+        посетить на ближайших выходных.
+    </string>
+    <string name="pinned_events">Прикреплённые события:</string>
+    <string name="comments_header">Комментарии:</string>
+    <string name="likes_num">12</string>
+    <string name="coms_num">2</string>
+    <string name="enter_comment">Введите комментарий</string>
+    <string name="comment_text">Спасибо за подборку! Обязательно схожу на что-то из этого в выходные!</string>
 </resources>
