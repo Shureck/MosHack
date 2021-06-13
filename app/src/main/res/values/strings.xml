@@ -54,4 +54,14 @@
     <string name="rate">Оценить</string>
     <string name="rated">Оценено</string>
 
+    <string name="welcome">Добро пожаловать в Афишу Москвы!</string>
+    <string name="survey_desc">Ответьте на пару вопросов, и мы поймём,
+        какие мероприятия вам лучше предложить:</string>
+    <string name="age_question">Сколько Вам лет?</string>
+    <string name="child_question">Есть ли у Вас дети до 14?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="sphere_question">Какие мероприятия вам интересны? (до 5 вариантов)</string>
+    <string name="go_next">Продолжить</string>
+
 </resources>
