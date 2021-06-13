@@ -3,6 +3,7 @@ package com.shureck.moshack;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
@@ -10,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -46,6 +48,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -64,6 +67,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     String str;
     Button button;
     int tappedButtons;
+    Button currentCarouselButton;
 
     LinearLayout liner;
 
@@ -77,9 +81,14 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
 
     private final OkHttpClient client = new OkHttpClient();
 
+    String tag = "def";
+    String count = "20";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_maps);
 
         WorkWithToken workWithToken = new WorkWithToken(MapsActivity.this);
@@ -92,8 +101,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = ll;
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=20");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size=20");
 
+        currentCarouselButton = findViewById(R.id.buttonAllMap);
     }
 
     @SuppressLint("MissingPermission")
@@ -248,9 +258,42 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         return bestLocation;
     }
 
+    void changeCarouselButtonDesign(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_blue);
+            textColor = getResources().getColor(R.color.main_blue);
+        }
+
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
+    }
+
     @Override
     public void onClick(View v) {
-
+        mMap.clear();
+        changeCarouselButtonDesign(currentCarouselButton, false);
+        currentCarouselButton = (Button) v;
+        changeCarouselButtonDesign(currentCarouselButton, true);
+        if (((Button) v).getText().equals("Всё") || ((Button) v).getText().equals("Рекомендации") || ((Button) v).getText().equals("Доступная среда")){
+            tag = "def";
+            String count = "20";
+            liner.removeAllViews();
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size="+count);
+        }
+        else{
+            tag = ((Button) v).getText().toString();
+            String count = "100";
+            liner.removeAllViews();
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size="+count);
+        }
     }
 
     class IOAsyncTask extends AsyncTask<String, Void, String> {
@@ -293,38 +336,40 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             TextView freeTextView = newGenreButton.findViewById(R.id.freeTextView);
             TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
 
-            imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
-            sphereTextView.setText(previews.get(i).sphere.get(0));
-            freeTextView.setText(previews.get(i).free.toString());
+            if(tag.equals("def") || previews.get(i).sphere.get(0).equals(tag) || previews.get(i).sphere.size()>1 && previews.get(i).sphere.get(1).equals(tag)) {
 
-            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
+                imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
+                sphereTextView.setText(previews.get(i).sphere.get(0));
+                freeTextView.setText(previews.get(i).free.toString());
 
-            if (previews.get(i).free){
-                freeTextView.setText("Бесплатно");
-            }
-            else {
-                freeTextView.setText("");
-            }
-            eventHeader.setText(previews.get(i).title);
+                SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
+                dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
 
-
-            surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
-            selectedGenres.add(false);
-
-            newGenreButton.setId(previews.get(i).idItem);
-            newGenreButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MapsActivity.this, FullInfoActivity.class);
-                    intent.putExtra("id", String.valueOf(v.getId()));
-                    startActivity(intent);
+                if (previews.get(i).free) {
+                    freeTextView.setText("Бесплатно");
+                } else {
+                    freeTextView.setText("");
                 }
-            });
+                eventHeader.setText(previews.get(i).title);
 
-            mMap.addMarker(new MarkerOptions().position(new LatLng(previews.get(i).lat, previews.get(i).lon)).title(previews.get(i).title)).setTag(previews.get(i));
 
-            liner.addView(newGenreButton);
+                surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
+                selectedGenres.add(false);
+
+                newGenreButton.setId(previews.get(i).idItem);
+                newGenreButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MapsActivity.this, FullInfoActivity.class);
+                        intent.putExtra("id", String.valueOf(v.getId()));
+                        startActivity(intent);
+                    }
+                });
+
+                mMap.addMarker(new MarkerOptions().position(new LatLng(previews.get(i).lat, previews.get(i).lon)).title(previews.get(i).title)).setTag(previews.get(i));
+
+                liner.addView(newGenreButton);
+            }
         }
     }
 

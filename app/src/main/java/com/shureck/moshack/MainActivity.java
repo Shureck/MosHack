@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
             toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
           
-            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=3&size="+count);
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size="+count);
         }
 
         currentCarouselButton = findViewById(R.id.buttonAll);
@@ -170,11 +171,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 changeCarouselButtonDesign(currentCarouselButton, false);
                 currentCarouselButton = (Button) v;
                 changeCarouselButtonDesign(currentCarouselButton, true);
-                if (((Button) v).getText().equals("Всё")){
+                if (((Button) v).getText().equals("Всё") || ((Button) v).getText().equals("Рекомендации") || ((Button) v).getText().equals("Доступная среда")){
                     tag = "def";
                     String count = "20";
                     mainEventsContainer.removeAllViews();
-                    new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=2&size="+count);
+                    new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size="+count);
                 }
                 else{
                     tag = ((Button) v).getText().toString();
