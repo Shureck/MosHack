@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MapsActivity"
-    tools:showIn="@layout/activity_maps">
+    >
 
     <fragment
         android:id="@+id/map"
@@ -17,6 +16,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".MapsActivity" />
 
+    <ScrollView
+        android:id="@+id/mapsEventsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/nearEventsHeader"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,27 +42,106 @@
         android:paddingBottom="16dp"
         />
 
-    <ScrollView
-        android:id="@+id/mapsEventsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nearEventsHeader">
 
         <LinearLayout
-            android:id="@+id/liner"
+            android:id="@+id/singleLiner"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/carouselContainer"
+            app:layout_constraintTop_toBottomOf="@id/nearEventsHeader"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+        </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_marginTop="4dp"
+        android:id="@+id/carouselContainer"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/singleLiner"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <LinearLayout
+            android:id="@+id/buttonsCarousel"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonAll"
+                android:text="@string/button_all"
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SmallButtonThemeInactive"
+                android:backgroundTint="@color/main_blue"
+                android:onClick="onClick"
+                android:textColor="@color/white"
+                />
+
+            <Button
+                android:id="@+id/buttonSubs"
+                android:text="@string/button_subs"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                style="@style/SmallButtonThemeInactive"
+                />
+
+            <Button
+                android:id="@+id/buttonRec"
+                android:text="@string/button_rec"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                style="@style/SmallButtonThemeInactive"
+                />
+
+            <Button
+                android:id="@+id/forKids"
+                android:text="@string/for_kids"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick"
+                style="@style/SmallButtonThemeInactive"
+                />
+
+            <Button
+                android:id="@+id/inclusive"
+                android:text="@string/inclusive"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:onClick="onClick"
+                style="@style/SmallButtonThemeInactive"
+                />
 
         </LinearLayout>
 
+    </HorizontalScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/liner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/carouselContainer">
+
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

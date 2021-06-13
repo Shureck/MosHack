@@ -1,6 +1,7 @@
 package com.shureck.moshack;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,17 +138,63 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
+        Preview preview = (Preview) marker.getTag();
 
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            Toast.makeText(this,
-                    marker.getId() +
-                            " has been clicked " + clickCount + " times.",
-                    Toast.LENGTH_SHORT).show();
+        liner = findViewById(R.id.singleLiner);
+        ScrollView scrollView = findViewById(R.id.mapsEventsContainer);
+        scrollView.scrollTo(0,0);
+
+        liner.removeAllViews();
+
+        LayoutInflater inflater = LayoutInflater.from(liner.getContext());
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        initImageLoader(getApplicationContext());
+
+        selectedGenres = new ArrayList<>();
+        genresToSend = new ArrayList<>();
+
+        tappedButtons = 0;
+
+        surveyButtons = new ArrayList<>();
+        View newGenreButton = inflater.inflate(R.layout.element, null);
+
+        ImageView genreImage = newGenreButton.findViewById(R.id.eventImageView);
+        TextView dateTextView = newGenreButton.findViewById(R.id.dateTextView);
+        TextView sphereTextView = newGenreButton.findViewById(R.id.sphereTextView);
+        TextView freeTextView = newGenreButton.findViewById(R.id.freeTextView);
+        TextView eventHeader = newGenreButton.findViewById(R.id.eventHeader);
+
+        imageLoader.displayImage(preview.jpgUrl, genreImage);
+        sphereTextView.setText(preview.sphere.get(0));
+        freeTextView.setText(preview.free.toString());
+
+        SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
+        dateTextView.setText(sddd.format(new Date(Long.valueOf(preview.date_from_timestamp) * 1000)));
+
+        if (preview.free) {
+            freeTextView.setText("Бесплатно");
+        } else {
+            freeTextView.setText("");
         }
+        eventHeader.setText(preview.title);
+
+
+        surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
+        selectedGenres.add(false);
+
+        newGenreButton.setId(preview.idItem);
+        newGenreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, FullInfoActivity.class);
+                intent.putExtra("id", String.valueOf(v.getId()));
+                startActivity(intent);
+            }
+        });
+
+        liner.addView(newGenreButton);
+
         return false;
     }
 
@@ -274,7 +322,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
                 }
             });
 
-            mMap.addMarker(new MarkerOptions().position(new LatLng(previews.get(i).lat, previews.get(i).lon)).title(previews.get(i).title)).setTag(0);
+            mMap.addMarker(new MarkerOptions().position(new LatLng(previews.get(i).lat, previews.get(i).lon)).title(previews.get(i).title)).setTag(previews.get(i));
 
             liner.addView(newGenreButton);
         }
