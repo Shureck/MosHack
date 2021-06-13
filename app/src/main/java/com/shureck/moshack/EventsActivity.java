@@ -65,7 +65,6 @@ public class EventsActivity extends AppCompatActivity {
         ff = intent.getStringExtra("flag");
         msg = intent.getStringExtra("msg");
         System.out.println(tag);
-        Button button = findViewById(R.id.subscribeButton);
 
         button = findViewById(R.id.subscribeButton);
         button.setOnClickListener(new View.OnClickListener() {

@@ -13,8 +13,18 @@
     <string name="free">Бесплатно</string>
     <string name="event_name">«Прометей прикованный» в культурном центре «Новослободский»</string>
 
-    <string name="subs">Мой канал</string>
-    <string name="channel_list">Интересные каналы</string>
+    <string name="my_channel_text">Мой канал</string>
+    <string name="my_channel_name">Искусствовед Андрей</string>
+    <string name="my_subs_full">341 подписчик</string>
+    <string name="my_likes_full">1203 лайка</string>
+    <string name="channels_header">Интересные каналы</string>
+    <string name="cats_button">Категории</string>
+    <string name="authors_button">Авторские</string>
+    <string name="author_channel_name">Тропарёво-Никулино</string>
+    <string name="subs_full">421 подписчик</string>
+    <string name="authors_channel_short_desc">События в парках, музеях, выставки в районе</string>
+
+
     <string name="channel_name">User</string>
     <string name="channel_desc">Театральные постановки, пьесы…</string>
     <string name="channel_desc_full">Театральные постановки, пьесы, мюзиклы и многое другое в театрах и концертных залах города.</string>
