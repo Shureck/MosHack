@@ -2,8 +2,7 @@ package com.shureck.moshack;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout mainEventsContainer;
     int tappedButtons;
 
+    String currentCategory;
+    int currentButtonId;
+    Button currentCarouselButton;
+
     private final OkHttpClient client = new OkHttpClient();
 
     private List cards;
@@ -66,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
         token = workWithToken.readToken();
 
-        if(token.equals("")) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
+//        if(token.equals("")) {
+//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(intent);
+        //}
 
 
 //        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
@@ -88,7 +92,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
         toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
+        currentCarouselButton = findViewById(R.id.buttonAll);
+        currentButtonId = currentCarouselButton.getId();
+
+        // new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
+    }
+
+    void changeCarouselButtonDesign(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_blue);
+            textColor = getResources().getColor(R.color.main_blue);
+        }
+
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
     }
 
     @Override
@@ -109,6 +134,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.mapButton:
                 Intent intent3 = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent3);
+                break;
+            default:
+                changeCarouselButtonDesign(currentCarouselButton, false);
+                currentCarouselButton = (Button) v;
+                changeCarouselButtonDesign(currentCarouselButton, true);
                 break;
         }
     }
