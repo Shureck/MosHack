@@ -46,12 +46,16 @@ public class ChannelsActivity extends AppCompatActivity {
     private List cards;
     private RecyclerView rv;
 
+    private String token;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_channel);
+
+        WorkWithToken workWithToken = new WorkWithToken(ChannelsActivity.this);
+        token = workWithToken.readToken();
 
         setData();
     }
@@ -103,6 +107,7 @@ public class ChannelsActivity extends AppCompatActivity {
 
             Request request = new Request.Builder()
                     .url(str)
+                    .header("Authorization","Bearer "+token)
                     .get()
                     .build();
 

@@ -36,6 +36,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:textAllCaps="false"
+                android:onClick="onClick"
                 />
 
             <Button
@@ -50,7 +51,8 @@
                 android:layout_rowWeight="1"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="onClick"/>
 
             <Button
                 android:id="@+id/favButton"
@@ -64,7 +66,8 @@
                 android:layout_rowWeight="1"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="onClick"/>
 
             <Button
                 android:id="@+id/mapButton"
@@ -78,7 +81,8 @@
                 android:layout_rowWeight="1"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="onClick"/>
 
         </GridLayout>
 
