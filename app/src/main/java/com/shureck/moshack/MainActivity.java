@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         token = workWithToken.readToken();
         System.out.println("Token "+token);
 
+        Intent intentTest = new Intent(MainActivity.this, NewPostActivity.class);
+        startActivity(intentTest);
+
+
         if(token == null || token.equals("")) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -88,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 //                Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
 
-            Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
-            startActivity(intent);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);

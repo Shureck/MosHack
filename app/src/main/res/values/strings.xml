@@ -77,9 +77,19 @@
     <!-- New post activity -->
     <string name="new_post_header">Новый пост</string>
     <string name="pin_image">Картинка</string>
-    <string name="pin_event">Событие</string>
-    <string name="publish">Запостить</string>
+    <string name="pin_event">Доб. событие</string>
+    <string name="publish">Опубликовать</string>
     <string name="post_header">Заголовок поста</string>
+    <string name="post_image">Ссылки на картинки к посту</string>
     <string name="post_text">Введите текст поста</string>
+    <string name="pin_event_header">Добавить событие</string>
+    <string name="search_all_events">Поиск по всем событиям</string>
+    <string name="your_events">Ваши события:</string>
+
+    <!-- Short event info -->
+    <string name="short_info_header">«Число как образ» в галерее «А3»</string>
+    <string name="short_info_time">19 июня</string>
+    <string name="short_info_sphere">Выставка</string>
+    <string name="short_info_free">Бесплатно</string>
 
 </resources>
