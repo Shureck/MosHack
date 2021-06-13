@@ -25,6 +25,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar"
             app:title="@string/my_afisha"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleMarginBottom="12dp"
             >
 
             <androidx.appcompat.widget.Toolbar
