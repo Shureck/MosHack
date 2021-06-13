@@ -1,14 +1,8 @@
 package com.shureck.moshack;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,14 +12,11 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -46,8 +37,6 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -62,15 +51,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout mainEventsContainer;
     int tappedButtons;
 
+    String currentCategory;
+    int currentButtonId;
+    Button currentCarouselButton;
+
     private final OkHttpClient client = new OkHttpClient();
 
     private List cards;
     private RecyclerView rv;
     private String token;
-
-    LocationManager locationManager;
-    String provider;
-    private final int REQUEST_LOCATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,14 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        provider = locationManager.getBestProvider(new Criteria(), false);
-
-        requestLocationPermission();
-
         WorkWithToken workWithToken = new WorkWithToken(MainActivity.this);
         token = workWithToken.readToken();
+
 
         if(token == null || token.equals("")) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -109,9 +93,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolBarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
             toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
             toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
-
+          
             new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
         }
+
+        currentCarouselButton = findViewById(R.id.buttonAll);
+        currentButtonId = currentCarouselButton.getId();
+    }
+
+    void changeCarouselButtonDesign(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_blue);
+            textColor = getResources().getColor(R.color.main_blue);
+        }
+
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
     }
 
     @Override
@@ -133,25 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent3 = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent3);
                 break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @AfterPermissionGranted(REQUEST_LOCATION_PERMISSION)
-    public void requestLocationPermission() {
-        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
-        if(EasyPermissions.hasPermissions(this, perms)) {
-            //Toast.makeText(this, "Permission already granted", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            EasyPermissions.requestPermissions(this, "Please grant the location permission", REQUEST_LOCATION_PERMISSION, perms);
+            default:
+                changeCarouselButtonDesign(currentCarouselButton, false);
+                currentCarouselButton = (Button) v;
+                changeCarouselButtonDesign(currentCarouselButton, true);
+                break;
         }
     }
 
@@ -185,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             freeTextView.setText(previews.get(i).free.toString());
 
             SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp)*1000)));
+            dateTextView.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
 
             if (previews.get(i).free){
                 freeTextView.setText("Бесплатно");
@@ -246,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         T[] arr = new Gson().fromJson(s, clazz);
         return Arrays.asList(arr); //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
     }
-
 
     public String sendData(String str){
         try {

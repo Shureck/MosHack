@@ -150,6 +150,7 @@
                     android:layout_height="wrap_content"
                     style="@style/SmallButtonThemeInactive"
                     android:backgroundTint="@color/main_blue"
+                    android:onClick="onClick"
                     android:textColor="@color/white"
                     />
 
@@ -159,6 +160,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onClick"
                     style="@style/SmallButtonThemeInactive"
                     />
 
@@ -168,6 +170,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onClick"
                     style="@style/SmallButtonThemeInactive"
                     />
 
@@ -177,6 +180,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="onClick"
                     style="@style/SmallButtonThemeInactive"
                     />
 
@@ -187,6 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:onClick="onClick"
                     style="@style/SmallButtonThemeInactive"
                     />
 
