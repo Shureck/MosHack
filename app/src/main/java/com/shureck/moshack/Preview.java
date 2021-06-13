@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Preview {
     int idItem;
-    String date;
-    String title;
+    public String date;
+    public String title;
     String jpgUrl;
     List<String> sphere;
     Double lat;

@@ -8,16 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.shureck.moshack.DateJson;
 
 import java.io.IOException;
 import java.sql.Date;
