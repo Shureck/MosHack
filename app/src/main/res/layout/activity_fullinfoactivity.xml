@@ -123,7 +123,7 @@
                     android:minWidth="320dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/mock_image"
+                    app:srcCompat="@color/white_gray"
                     />
 
             </androidx.cardview.widget.CardView>

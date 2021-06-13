@@ -24,7 +24,7 @@
 
 
 
-    <style name="SmallButtonThemeInactive" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="SmallButtonThemeInactive" parent="Theme.MosHack">
         <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
         <item name="cornerRadius">36dp</item>
         <item name="backgroundTint">@color/light_blue</item>

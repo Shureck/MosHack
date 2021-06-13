@@ -12,6 +12,7 @@
     <color name="light_green">#93C652</color>
     <color name="dark_gray">#818181</color>
     <color name="light_gray">#ECECEC</color>
+    <color name="white_gray">#EAEAEA</color>
 
     <color name="category_red">#FF8A80</color>
     <color name="icon_red">#FFBCAF</color>

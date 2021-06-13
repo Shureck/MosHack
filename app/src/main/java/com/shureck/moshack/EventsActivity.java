@@ -2,19 +2,19 @@ package com.shureck.moshack;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -65,14 +65,16 @@ public class EventsActivity extends AppCompatActivity {
         ff = intent.getStringExtra("flag");
         msg = intent.getStringExtra("msg");
         System.out.println(tag);
+        Button button = findViewById(R.id.subscribeButton);
 
         if(!ff.equals("4")){
-            Button button = findViewById(R.id.subscribeButton);
             button.setText("Отписаться");
+            activateButton(button, false);
         }
         else{
             ImageView imageView = findViewById(R.id.subscribeCheck);
             imageView.setVisibility(View.INVISIBLE);
+            activateButton(button, true);
         }
 
         TextView mess = findViewById(R.id.channelDescFull);
@@ -82,6 +84,24 @@ public class EventsActivity extends AppCompatActivity {
         top.setText(tag);
 
         new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=80");
+    }
+
+    void activateButton(Button button, boolean activate) {
+
+        int buttonColor, textColor;
+        if (activate) {
+            buttonColor = getResources().getColor(R.color.main_blue);
+            textColor = getResources().getColor(R.color.white);
+        } else {
+            buttonColor = getResources().getColor(R.color.light_gray);
+            textColor = getResources().getColor(R.color.dark_gray);
+        }
+
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+        DrawableCompat.setTint(buttonDrawable, buttonColor);
+        button.setBackground(buttonDrawable);
+        button.setTextColor(textColor);
     }
 
     public void setData(List<Preview> previews){
