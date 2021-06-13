@@ -37,12 +37,7 @@ public class EventsActivity extends AppCompatActivity {
 
     String strr;
 
-    public ArrayList<View> surveyButtons;
-    public ArrayList<Boolean> selectedGenres;
-    public ArrayList<SurveyButtonContent> buttonContents;
-    public ArrayList<String> genresToSend;
     LinearLayout mainEventsContainer;
-    int tappedButtons;
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -113,13 +108,6 @@ public class EventsActivity extends AppCompatActivity {
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
 
-        selectedGenres = new ArrayList<>();
-        buttonContents = new ArrayList<>();
-        genresToSend = new ArrayList<>();
-
-        tappedButtons = 0;
-
-        surveyButtons = new ArrayList<>();
         for (int i=0; i<previews.size(); i++) {
             View newGenreButton = inflater.inflate(R.layout.element, null);
 

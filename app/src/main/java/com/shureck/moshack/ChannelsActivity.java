@@ -35,19 +35,7 @@ public class ChannelsActivity extends AppCompatActivity {
 
     String strr;
 
-    public GridLayout gridLayout;
-    public ArrayList<View> surveyButtons;
-    public ArrayList<Boolean> selectedGenres;
-    public ArrayList<SurveyButtonContent> buttonContents;
-    public ArrayList<String> genresToSend;
-    String str;
-    Button button;
-    int tappedButtons;
-
     private final OkHttpClient client = new OkHttpClient();
-
-    private List cards;
-    private RecyclerView rv;
 
     private String token;
 

@@ -32,13 +32,9 @@ import okhttp3.Response;
 
 public class CalendarActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public GridLayout gridLayout;
-    public ArrayList<View> surveyButtons;
     public ArrayList<Boolean> selectedGenres;
     public ArrayList<SurveyButtonContent> buttonContents;
     public ArrayList<String> genresToSend;
-    String str;
-    Button button;
     int tappedButtons;
 
     private String token;
@@ -93,11 +89,6 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
 
     public void setData(List<DateJson> previews){
 
-        selectedGenres = new ArrayList<>();
-        buttonContents = new ArrayList<>();
-        genresToSend = new ArrayList<>();
-
-        //buttonContents = SurveyHelper.fillSurveyContent();
         tappedButtons = 0;
         linearLayout = findViewById(R.id.eventContainer);
 
@@ -106,9 +97,6 @@ public class CalendarActivity extends AppCompatActivity implements View.OnClickL
         selectedGenres = new ArrayList<>();
         buttonContents = new ArrayList<>();
         genresToSend = new ArrayList<>();
-
-        //buttonContents = SurveyHelper.fillSurveyContent();
-        tappedButtons = 0;
 
         SimpleDateFormat sddd = new SimpleDateFormat("HH:mm");
 

@@ -66,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             String strr = response;
             System.out.println("Login "+strr);
             String previews = "";
-//            Gson gson = new Gson();
-//            LoginModel previews = gson.fromJson(strr, LoginModel.class);
             try {
                 JSONObject jsonObj = new JSONObject(strr);
                 previews = jsonObj.getString("token");
