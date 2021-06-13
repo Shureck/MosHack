@@ -1,5 +1,6 @@
 package com.shureck.moshack;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,18 +9,20 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.shureck.moshack.Preview;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -58,6 +61,7 @@ public class ChannelsActivity extends AppCompatActivity {
         token = workWithToken.readToken();
 
         setData();
+        //new IOAsyncTask().onPostExecute("http://192.168.31.187:8083/user/putSphere");
     }
 
     class IOAsyncTask extends AsyncTask<String, Void, String> {
@@ -84,12 +88,58 @@ public class ChannelsActivity extends AppCompatActivity {
         LayoutInflater subsInflater = LayoutInflater.from(subsList.getContext());
         LayoutInflater channelsInflater = LayoutInflater.from(channelsList.getContext());
 
-        for (int i = 0; i < 5; i++) {
+        String[] s = {"Спектакли","Экскурсии","Выставки"};
+        int[] st = {11, 7, 10};
+        String[] ss = {"Концерты","Для детей","Лекции","Мастер-классы","Кино"};
+        int[] sst = {18, 5, 3, 17, 6};
+
+        Random random = new Random();
+        for (int i = 0; i < 3; i++) {
             View subView = subsInflater.inflate(R.layout.channel_item, null);
+
+            TextView channelName = subView.findViewById(R.id.channelName);
+            TextView channelDesc = subView.findViewById(R.id.channelDesc);
+            ImageView check = subView.findViewById(R.id.checkSub);
+
+            channelName.setText(s[i]);
+            channelDesc.setText( st[i]+" мероприятий");
+
+            subView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = v.findViewById(R.id.channelName);
+                    Intent intent = new Intent(ChannelsActivity.this, EventsActivity.class);
+                    intent.putExtra("tag", String.valueOf(textView.getText()));
+                    intent.putExtra("flag", String.valueOf(check.getVisibility()));
+                    intent.putExtra("msg", String.valueOf(channelDesc.getText()));
+                    startActivity(intent);
+                }
+            });
+            subsList.addView(subView);
+
+        }
+        for (int i = 0; i < 5; i++) {
             View channelView = channelsInflater.inflate(R.layout.channel_item, null);
             ImageView check = channelView.findViewById(R.id.checkSub);
             check.setVisibility(View.INVISIBLE);
-            subsList.addView(subView);
+
+            TextView channelName = channelView.findViewById(R.id.channelName);
+            TextView channelDesc = channelView.findViewById(R.id.channelDesc);
+
+            channelName.setText(ss[i]);
+            channelDesc.setText(sst[i]+" мероприятий");
+
+            channelView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView textView = v.findViewById(R.id.channelName);
+                    Intent intent = new Intent(ChannelsActivity.this, EventsActivity.class);
+                    intent.putExtra("tag", String.valueOf(textView.getText()));
+                    intent.putExtra("flag", String.valueOf(check.getVisibility()));
+                    intent.putExtra("msg", String.valueOf(channelDesc.getText()));
+                    startActivity(intent);
+                }
+            });
             channelsList.addView(channelView);
         }
     }

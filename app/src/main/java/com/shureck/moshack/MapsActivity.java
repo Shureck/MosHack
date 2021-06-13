@@ -2,7 +2,6 @@ package com.shureck.moshack;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
@@ -13,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +36,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.shureck.moshack.Preview;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -55,7 +55,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         GoogleMap.OnMarkerClickListener,
         OnMapReadyCallback {
 
-    public GridLayout gridLayout;
     public ArrayList<View> surveyButtons;
     public ArrayList<Boolean> selectedGenres;
     public ArrayList<SurveyButtonContent> buttonContents;
@@ -63,6 +62,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     String str;
     Button button;
     int tappedButtons;
+
+    LinearLayout liner;
 
     GoogleMap mMap;
     private String token;
@@ -89,7 +90,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = ll;
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=10");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/preview?page=0&size=20");
 
     }
 
@@ -222,10 +223,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     }
 
     private void setData(List<Preview> previews) {
-        button = findViewById(R.id.button);
-        gridLayout = findViewById(R.id.grid);
+        liner = findViewById(R.id.liner);
 
-        LayoutInflater inflater = LayoutInflater.from(gridLayout.getContext());
+        LayoutInflater inflater = LayoutInflater.from(liner.getContext());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
@@ -234,8 +234,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         genresToSend = new ArrayList<>();
 
         tappedButtons = 0;
-
-        button.setOnClickListener(this);
 
         surveyButtons = new ArrayList<>();
         for (int i=0; i<previews.size(); i++) {
@@ -252,7 +250,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             freeTextView.setText(previews.get(i).free.toString());
 
             SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
+            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
 
             if (previews.get(i).free){
                 freeTextView.setText("Бесплатно");
@@ -266,7 +264,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             surveyButtons.add(newGenreButton.findViewById(R.id.imageButton));
             selectedGenres.add(false);
 
-            newGenreButton.findViewById(R.id.imageButton).setOnClickListener(this);
             newGenreButton.setId(previews.get(i).idItem);
             newGenreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -279,7 +276,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
 
             mMap.addMarker(new MarkerOptions().position(new LatLng(previews.get(i).lat, previews.get(i).lon)).title(previews.get(i).title)).setTag(0);
 
-            gridLayout.addView(newGenreButton);
+            liner.addView(newGenreButton);
         }
     }
 

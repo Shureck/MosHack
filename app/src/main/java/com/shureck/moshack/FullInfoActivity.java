@@ -7,28 +7,24 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.shureck.moshack.FullData;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -84,6 +80,15 @@ public class FullInfoActivity extends AppCompatActivity {
         timeTextView.setText(sddd.format(new Date(previews.date_from_timestamp*1000))+"–"+sdd.format(new Date(previews.date_to_timestamp*1000)));
         phoneTextView.setText(previews.phone);
 
+        phoneTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+phoneTextView.getText()));
+                startActivity(intent);
+            }
+        });
+
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
 
@@ -94,7 +99,7 @@ public class FullInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("https://www.google.com/maps/place/"+previews.address.get(0).address+"/17z"));
+                        Uri.parse("geo:0,0?q="+previews.address.get(0).address));
                 startActivity(intent);
             }
         });

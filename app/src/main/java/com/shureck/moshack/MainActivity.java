@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.rhexgomez.typer.roboto.TyperRoboto;
+import com.shureck.moshack.Preview;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -81,9 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 //                Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
 
-        Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
-
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
+//        startActivity(intent);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.favButton:
-
+                Intent intent2 = new Intent(MainActivity.this, MyEventsActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.mapButton:
                 Intent intent3 = new Intent(MainActivity.this, MapsActivity.class);
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             freeTextView.setText(previews.get(i).free.toString());
 
             SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(previews.get(i).date_from_timestamp*1000)));
+            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
 
             if (previews.get(i).free){
                 freeTextView.setText("Бесплатно");
