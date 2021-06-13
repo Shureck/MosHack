@@ -28,11 +28,13 @@
     <string name="calendar">Календарь</string>
     <string name="my_events">Мои события</string>
     <string name="near_events">События рядом</string>
+    <string name="events">Лента событий</string>
 
     <string name="button_all">Всё</string>
     <string name="button_subs">Подписки</string>
     <string name="button_rec">Рекомендации</string>
-    <string name="button_near">Мой район</string>
+    <string name="for_kids">Для детей</string>
+    <string name="inclusive">Доступная среда</string>
 
     <string name="place_name">Культурный центр «Новослободский»</string>
     <string name="date_time">29 июня, 19.00</string>
@@ -45,5 +47,11 @@
     <string name="go_button_text_paid">Купить билет</string>
     <string name="go_to_map_text">На карте</string>
     <string name="phone" tools:ignore="TypographyDashes">8-999-555-33-22</string>
+
+    <string name="planned">Предстоящие</string>
+    <string name="visited">Посещённые</string>
+
+    <string name="rate">Оценить</string>
+    <string name="rated">Оценено</string>
 
 </resources>
