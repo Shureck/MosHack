@@ -70,10 +70,8 @@ public class ChannelsActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        subsList = findViewById(R.id.subsContainer);
         channelsList = findViewById(R.id.channelsContainer);
 
-        LayoutInflater subsInflater = LayoutInflater.from(subsList.getContext());
         LayoutInflater channelsInflater = LayoutInflater.from(channelsList.getContext());
 
         String[] s = {"Спектакли","Экскурсии","Выставки"};
@@ -82,30 +80,7 @@ public class ChannelsActivity extends AppCompatActivity {
         int[] sst = {18, 5, 3, 17, 6};
 
         Random random = new Random();
-        for (int i = 0; i < 3; i++) {
-            View subView = subsInflater.inflate(R.layout.channel_item, null);
 
-            TextView channelName = subView.findViewById(R.id.channelName);
-            TextView channelDesc = subView.findViewById(R.id.channelDesc);
-            ImageView check = subView.findViewById(R.id.checkSub);
-
-            channelName.setText(s[i]);
-            channelDesc.setText( st[i]+" мероприятий");
-
-            subView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TextView textView = v.findViewById(R.id.channelName);
-                    Intent intent = new Intent(ChannelsActivity.this, EventsActivity.class);
-                    intent.putExtra("tag", String.valueOf(textView.getText()));
-                    intent.putExtra("flag", String.valueOf(check.getVisibility()));
-                    intent.putExtra("msg", String.valueOf(channelDesc.getText()));
-                    startActivity(intent);
-                }
-            });
-            subsList.addView(subView);
-
-        }
         for (int i = 0; i < 5; i++) {
             View channelView = channelsInflater.inflate(R.layout.channel_item, null);
             ImageView check = channelView.findViewById(R.id.checkSub);

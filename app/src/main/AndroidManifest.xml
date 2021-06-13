@@ -18,8 +18,9 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MosHack">
-        <activity android:name=".SurveyActivity"></activity>
+        android:theme="@style/Theme.MosHack.NoActionBar">
+        <activity android:name=".MyChannelActivity"></activity>
+        <activity android:name=".SurveyActivity" />
         <activity android:name=".MyEventsActivity" />
         <activity android:name=".ChannelInfoActivity" />
         <!--
@@ -44,8 +45,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity"
-            android:theme="@style/Theme.MosHack.NoActionBar"/>
+        <activity
+            android:name=".MapsActivity"
+            android:theme="@style/Theme.MosHack.NoActionBar" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".ChannelsActivity" />
         <activity android:name=".EventsActivity" />
