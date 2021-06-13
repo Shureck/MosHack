@@ -105,4 +105,12 @@
     <string name="coms_num">2</string>
     <string name="enter_comment">Введите комментарий</string>
     <string name="comment_text">Спасибо за подборку! Обязательно схожу на что-то из этого в выходные!</string>
+
+    <!-- Channel full info activity -->
+    <string name="full_channel_likes">1242</string>
+    <string name="full_channel_subs">412</string>
+    <string name="full_channel_desc">Подборка интересных выставок и художественных мероприятий
+        Москвы от искусствоведа с образованием</string>
+    <string name="subs_button">Подписки</string>
+    <string name="my_posts">Посты</string>
 </resources>

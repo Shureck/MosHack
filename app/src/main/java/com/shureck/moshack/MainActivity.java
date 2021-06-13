@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         token = workWithToken.readToken();
         System.out.println("Token "+token);
 
-        Intent intentTest = new Intent(MainActivity.this, FullPostActivity.class);
+        Intent intentTest = new Intent(MainActivity.this, MyChannelActivity.class);
         startActivity(intentTest);
 
 
