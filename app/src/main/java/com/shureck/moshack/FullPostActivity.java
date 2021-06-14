@@ -1,6 +1,7 @@
 package com.shureck.moshack;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,10 +35,12 @@ import okhttp3.Response;
 
 public class FullPostActivity extends AppCompatActivity {
 
+    ConstraintLayout layoutll;
     LinearLayout pinnedEventsContainer;
     LinearLayout commentsContainer;
     private String token;
     String strr;
+    int id;
     LayoutInflater inflaterPinned;
     LayoutInflater inflaterComments;
     private final OkHttpClient client = new OkHttpClient();
@@ -50,6 +53,10 @@ public class FullPostActivity extends AppCompatActivity {
         WorkWithToken workWithToken = new WorkWithToken(FullPostActivity.this);
         token = workWithToken.readToken();
         System.out.println("Token " + token);
+
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        System.out.println("FFFFFFF "+id);
 
         pinnedEventsContainer = findViewById(R.id.pinnedEventsContainer);
         commentsContainer = findViewById(R.id.commentsContainer);
@@ -65,36 +72,34 @@ public class FullPostActivity extends AppCompatActivity {
                 editTextTextPersonName.getText().toString();
             }
         });
-//
-//        for (int i = 0; i < 3; i++) {
-//            View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);
-//            View newComment = inflaterPinned.inflate(R.layout.comment_layout, null);
-//
-//            pinnedEventsContainer.addView(newEventToPin);
-//            commentsContainer.addView(newComment);
-//        }
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/getUser");
+
+
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/getPost?postId="+id);
     }
 
-    public void setData(BigJson previews){
+    public void setData(HardPostModel previews){
 
-        pinnedEventsContainer = findViewById(R.id.pinnedEventsContainer);
+        layoutll = findViewById(R.id.fullPostContainer);
 
-        LayoutInflater inflater = LayoutInflater.from(pinnedEventsContainer.getContext());
+        LayoutInflater inflater = LayoutInflater.from(layoutll.getContext());
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         initImageLoader(getApplicationContext());
 
-        View newGenreButton = inflater.inflate(R.layout.element, null);
 
-        ImageView profilePostPic = newGenreButton.findViewById(R.id.profilePostPic);
-        ImageView fullPostEventImage = newGenreButton.findViewById(R.id.fullPostEventImage);
-        TextView postTime = newGenreButton.findViewById(R.id.postTime);
-        TextView profilePostChannelName = newGenreButton.findViewById(R.id.profilePostChannelName);
-        TextView fullPostText = newGenreButton.findViewById(R.id.fullPostText);
-        TextView fullPostHeader = newGenreButton.findViewById(R.id.fullPostHeader);
+        ImageView profilePostPic = findViewById(R.id.profilePostPic);
+        ImageView fullPostEventImage = findViewById(R.id.fullPostEventImage);
+        TextView postTime = findViewById(R.id.postTime);
+        TextView profilePostChannelName = findViewById(R.id.profilePostChannelName);
+        TextView fullPostText = findViewById(R.id.fullPostText);
+        TextView fullPostHeader = findViewById(R.id.fullPostHeader);
 
-        for (int i=0; i < previews.posts.get(0).idItemForPosts.size(); i++) {
+        imageLoader.displayImage(previews.jpgUrl, fullPostEventImage);
+        profilePostChannelName.setText(previews.name);
+        fullPostText.setText(previews.text);
+        fullPostHeader.setText(previews.title);
+
+        for (int i=0; i < previews.previews.size(); i++) {
 
             View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);
 
@@ -103,41 +108,19 @@ public class FullPostActivity extends AppCompatActivity {
             TextView shortInfoFree = newEventToPin.findViewById(R.id.shortInfoFree);
             TextView shortInfoHeader = newEventToPin.findViewById(R.id.shortInfoHeader);
 
-            shortInfoHeader.setText("Kek");
+            shortInfoSphere.setText(previews.previews.get(i).sphere.get(0));
+            if (previews.previews.get(i).free) {
+                shortInfoFree.setText("Бесплатно");
+            } else {
+                shortInfoFree.setText("");
+            }
+            shortInfoHeader.setText(previews.previews.get(i).title);
 
-//            if (previews.get(i).free) {
-//                freeTextView.setText("Бесплатно");
-//            } else {
-//                freeTextView.setText("");
-//            }
-
-//            newGenreButton.setId(previews.get(i).idItem);
-//            newGenreButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(FullPostActivity.this, FullInfoActivity.class);
-//                    intent.putExtra("id", String.valueOf(v.getId()));
-//                    startActivity(intent);
-//                }
-//            });
             pinnedEventsContainer.addView(newEventToPin);
         }
 
-        for (int i=0; i < previews.posts.get(0).idItemForPosts.size(); i++) {
-
-            View newComment = inflaterPinned.inflate(R.layout.comment_layout, null);
-
-            TextView commentTime = newComment.findViewById(R.id.commentTime);
-            ImageView profileCommentPic = newComment.findViewById(R.id.profileCommentPic);
-            TextView commentText = newComment.findViewById(R.id.commentText);
-            TextView profileCommentChannelName = newComment.findViewById(R.id.profileCommentChannelName);
-
-            profileCommentChannelName.setText("Kek");
-//
-//            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-//            commentTime.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
-
-
+        for (int i = 0; i < 3; i++) {
+            View newComment = inflaterComments.inflate(R.layout.comment_layout, null);
             commentsContainer.addView(newComment);
         }
     }
@@ -170,8 +153,7 @@ public class FullPostActivity extends AppCompatActivity {
         protected void onPostExecute(String response) {
             strr = response;
             Gson gson = new Gson();
-            BigJson previews = gson.fromJson(strr, BigJson.class);
-            System.out.println("DDD "+previews.name);
+            HardPostModel previews = gson.fromJson(strr, HardPostModel.class);
             setData(previews);
         }
     }

@@ -93,9 +93,10 @@ public class ChannelsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (v.getId()) {
             case R.id.catButton:
-                break;
 
+                break;
             case R.id.authorsButton:
+
                 break;
         }
 

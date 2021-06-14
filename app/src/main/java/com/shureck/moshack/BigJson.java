@@ -31,17 +31,12 @@ class Posts{
     int postId;
     String title;
     String text;
-    List<LinksUrl> linksUrl;
+    String linksUrl;
     List<IdItemForPosts> idItemForPosts;
     List<Coments> coments;
     int get_likes;
     String name;
     String date;
-}
-
-class LinksUrl{
-    int linkId;
-    String jpgUrl;
 }
 
 class IdItemForPosts{

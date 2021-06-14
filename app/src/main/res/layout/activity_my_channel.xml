@@ -177,15 +177,16 @@
                 >
 
                 <Button
-                    android:id="@+id/catButtonFullChannel"
+                    android:id="@+id/myPostsButton"
                     android:layout_weight="1"
-                    android:text="@string/cats_button"
+                    android:text="@string/my_posts"
                     android:layout_marginStart="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/main_blue"
                     android:textColor="@color/white_gray"
                     style="@style/SmallButtonThemeInactive"
+                    android:onClick="onClick"
                     />
 
                 <Button
@@ -197,17 +198,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/SmallButtonThemeInactive"
+                    android:onClick="onClick"
                     />
 
                 <Button
-                    android:id="@+id/myPostsButton"
+                    android:id="@+id/catButtonFullChannel"
                     android:layout_weight="1"
-                    android:text="@string/my_posts"
+                    android:text="@string/cats_button"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/SmallButtonThemeInactive"
+                    android:onClick="onClick"
                     />
 
 
