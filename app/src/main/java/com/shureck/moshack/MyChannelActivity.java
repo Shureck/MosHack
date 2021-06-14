@@ -70,7 +70,7 @@ public class MyChannelActivity extends AppCompatActivity implements View.OnClick
 //        }
 
         currentCarouselButton = findViewById(R.id.myPostsButton);
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/getUser","1");
+        new IOAsyncTask().execute("http://45.157.140.16:23200/user/getUser","1");
     }
 
     @Override
@@ -111,7 +111,7 @@ public class MyChannelActivity extends AppCompatActivity implements View.OnClick
 //                });
 //                universalContainer.addView(channelEvent);
 //            }
-            new IOAsyncTask().execute("http://192.168.31.187:8083/user/getUser","1");
+            new IOAsyncTask().execute("http://45.157.140.16:23200/user/getUser","1");
         }
     }
 
@@ -165,7 +165,7 @@ public class MyChannelActivity extends AppCompatActivity implements View.OnClick
             TextView shortPostText = channelEvent.findViewById(R.id.shortPostText);
             ImageView shortPostImage = channelEvent.findViewById(R.id.shortPostImage);
 
-            imageLoader.displayImage(previews.posts.get(i).linksUrl, shortPostImage);
+            imageLoader.displayImage(previews.posts.get(i).jpgUrl, shortPostImage);
 
             shortPostChannelName.setText(previews.posts.get(i).name);
             shortPostHeader.setText(previews.posts.get(i).title);
@@ -198,7 +198,7 @@ public class MyChannelActivity extends AppCompatActivity implements View.OnClick
             TextView shortPostText = channelEvent.findViewById(R.id.shortPostText);
             ImageView shortPostImage = channelEvent.findViewById(R.id.shortPostImage);
 
-            imageLoader.displayImage(previews.posts.get(i).linksUrl, shortPostImage);
+            imageLoader.displayImage(previews.posts.get(i).jpgUrl, shortPostImage);
 
             shortPostChannelName.setText(previews.posts.get(i).name);
             shortPostHeader.setText(previews.posts.get(i).title);

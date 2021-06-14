@@ -31,7 +31,7 @@ class Posts{
     int postId;
     String title;
     String text;
-    String linksUrl;
+    String jpgUrl;
     List<IdItemForPosts> idItemForPosts;
     List<Coments> coments;
     int get_likes;

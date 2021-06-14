@@ -53,7 +53,9 @@ public class NewPostActivity extends AppCompatActivity {
         buttonPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new IOAsyncTask().execute("http://192.168.31.187:8083/user/setPost");
+                new IOAsyncTask().execute("http://45.157.140.16:23200/user/setPost");
+                Intent intent = new Intent(NewPostActivity.this, MyChannelActivity.class);
+                startActivity(intent);
             }
         });
 

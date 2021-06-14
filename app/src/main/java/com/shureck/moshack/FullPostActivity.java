@@ -74,7 +74,7 @@ public class FullPostActivity extends AppCompatActivity {
         });
 
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/getPost?postId="+id);
+        new IOAsyncTask().execute("http://45.157.140.16:23200/user/getPost?postId="+id);
     }
 
     public void setData(HardPostModel previews){

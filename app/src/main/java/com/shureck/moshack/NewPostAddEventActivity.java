@@ -77,7 +77,7 @@ public class NewPostAddEventActivity extends AppCompatActivity {
             }
         });
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size=20");
+        new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page="+new Random().nextInt(15)+"&size=20");
     }
 
     public void setData(List<Preview> previews){

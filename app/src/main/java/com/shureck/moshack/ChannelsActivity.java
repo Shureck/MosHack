@@ -65,7 +65,7 @@ public class ChannelsActivity extends AppCompatActivity implements View.OnClickL
 
         currentCarouselButton = findViewById(R.id.catButton);
 
-        new IOAsyncTask().execute("http://192.168.31.187:8083/user/putSphere");
+        new IOAsyncTask().execute("http://45.157.140.16:23200/user/putSphere");
     }
 
 
