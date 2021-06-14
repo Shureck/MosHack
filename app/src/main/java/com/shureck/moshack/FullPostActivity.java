@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +38,8 @@ public class FullPostActivity extends AppCompatActivity {
     LinearLayout commentsContainer;
     private String token;
     String strr;
+    LayoutInflater inflaterPinned;
+    LayoutInflater inflaterComments;
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -49,22 +54,31 @@ public class FullPostActivity extends AppCompatActivity {
         pinnedEventsContainer = findViewById(R.id.pinnedEventsContainer);
         commentsContainer = findViewById(R.id.commentsContainer);
 
-        LayoutInflater inflaterPinned = LayoutInflater.from(pinnedEventsContainer.getContext());
-        LayoutInflater inflaterComments = LayoutInflater.from(commentsContainer.getContext());
+        inflaterPinned = LayoutInflater.from(pinnedEventsContainer.getContext());
+        inflaterComments = LayoutInflater.from(commentsContainer.getContext());
 
-        for (int i = 0; i < 3; i++) {
-            View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);
-            View newComment = inflaterPinned.inflate(R.layout.comment_layout, null);
-
-            pinnedEventsContainer.addView(newEventToPin);
-            commentsContainer.addView(newComment);
-        }
+        EditText editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
+        ImageView sendCommentButton = findViewById(R.id.sendCommentButton);
+        sendCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextTextPersonName.getText().toString();
+            }
+        });
+//
+//        for (int i = 0; i < 3; i++) {
+//            View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);
+//            View newComment = inflaterPinned.inflate(R.layout.comment_layout, null);
+//
+//            pinnedEventsContainer.addView(newEventToPin);
+//            commentsContainer.addView(newComment);
+//        }
         new IOAsyncTask().execute("http://192.168.31.187:8083/user/getUser");
     }
 
     public void setData(BigJson previews){
 
-        /*pinnedEventsContainer = findViewById(R.id.pinnedEventsContainer);
+        pinnedEventsContainer = findViewById(R.id.pinnedEventsContainer);
 
         LayoutInflater inflater = LayoutInflater.from(pinnedEventsContainer.getContext());
 
@@ -82,31 +96,50 @@ public class FullPostActivity extends AppCompatActivity {
 
         for (int i=0; i < previews.posts.get(0).idItemForPosts.size(); i++) {
 
-            imageLoader.displayImage(previews.get(i).jpgUrl, genreImage);
-            sphereTextView.setText(previews.get(i).sphere.get(0));
-            freeTextView.setText(previews.get(i).free.toString());
+            View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);
 
-            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
-            dateTextView.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
+            TextView shortInfoTime = newEventToPin.findViewById(R.id.shortInfoTime);
+            TextView shortInfoSphere = newEventToPin.findViewById(R.id.shortInfoSphere);
+            TextView shortInfoFree = newEventToPin.findViewById(R.id.shortInfoFree);
+            TextView shortInfoHeader = newEventToPin.findViewById(R.id.shortInfoHeader);
 
-            if (previews.get(i).free) {
-                freeTextView.setText("Бесплатно");
-            } else {
-                freeTextView.setText("");
-            }
-            eventHeader.setText(previews.get(i).title);
+            shortInfoHeader.setText("Kek");
 
-            newGenreButton.setId(previews.get(i).idItem);
-            newGenreButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(FullPostActivity.this, FullInfoActivity.class);
-                    intent.putExtra("id", String.valueOf(v.getId()));
-                    startActivity(intent);
-                }
-            });
-            pinnedEventsContainer.addView(newGenreButton);
-        }*/
+//            if (previews.get(i).free) {
+//                freeTextView.setText("Бесплатно");
+//            } else {
+//                freeTextView.setText("");
+//            }
+
+//            newGenreButton.setId(previews.get(i).idItem);
+//            newGenreButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(FullPostActivity.this, FullInfoActivity.class);
+//                    intent.putExtra("id", String.valueOf(v.getId()));
+//                    startActivity(intent);
+//                }
+//            });
+            pinnedEventsContainer.addView(newEventToPin);
+        }
+
+        for (int i=0; i < previews.posts.get(0).idItemForPosts.size(); i++) {
+
+            View newComment = inflaterPinned.inflate(R.layout.comment_layout, null);
+
+            TextView commentTime = newComment.findViewById(R.id.commentTime);
+            ImageView profileCommentPic = newComment.findViewById(R.id.profileCommentPic);
+            TextView commentText = newComment.findViewById(R.id.commentText);
+            TextView profileCommentChannelName = newComment.findViewById(R.id.profileCommentChannelName);
+
+            profileCommentChannelName.setText("Kek");
+//
+//            SimpleDateFormat sddd = new SimpleDateFormat("d MMMM");
+//            commentTime.setText(sddd.format(new Date(Long.valueOf(previews.get(i).date_from_timestamp) * 1000)));
+
+
+            commentsContainer.addView(newComment);
+        }
     }
 
     public static void initImageLoader(Context context) {
@@ -139,7 +172,7 @@ public class FullPostActivity extends AppCompatActivity {
             Gson gson = new Gson();
             BigJson previews = gson.fromJson(strr, BigJson.class);
             System.out.println("DDD "+previews.name);
-            //setData(previews);
+            setData(previews);
         }
     }
 
