@@ -1,0 +1,611 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8081
+  description: Generated server url
+paths:
+  /user/userUpdate:
+    post:
+      tags:
+      - main-controller
+      operationId: userUpdate
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+        required: true
+      responses:
+        "200":
+          description: OK
+  /user/userSubscription:
+    post:
+      tags:
+      - main-controller
+      operationId: userSubscription
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: sphere
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /user/setPost:
+    post:
+      tags:
+      - main-controller
+      operationId: setPost
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPost'
+        required: true
+      responses:
+        "200":
+          description: OK
+  /user/addComment:
+    post:
+      tags:
+      - main-controller
+      operationId: addComment
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: message
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: postId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+  /register:
+    post:
+      tags:
+      - main-controller
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /auth:
+    post:
+      tags:
+      - main-controller
+      operationId: auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /user/putSphere:
+    get:
+      tags:
+      - main-controller
+      operationId: putSphereAndSubscriptionForUser
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PutSphereAndSubscriptionForUser'
+  /user/getUser:
+    get:
+      tags:
+      - main-controller
+      operationId: getUser
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Member'
+  /user/getPost:
+    get:
+      tags:
+      - main-controller
+      operationId: getPost
+      parameters:
+      - name: postId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GetPost'
+  /user/getPostByName:
+    get:
+      tags:
+      - main-controller
+      operationId: getPostByName
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GetPost'
+  /putSphere:
+    get:
+      tags:
+      - main-controller
+      operationId: putSphere
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PutSphere'
+  /putItem:
+    get:
+      tags:
+      - main-controller
+      operationId: putItem
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ItemInfo'
+  /preview:
+    get:
+      tags:
+      - main-controller
+      operationId: putPreview
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Preview'
+  /onetime/putSphere:
+    get:
+      tags:
+      - main-controller
+      operationId: Sphere
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PutSphere'
+  /findByDate:
+    get:
+      tags:
+      - main-controller
+      operationId: findByDate
+      parameters:
+      - name: page
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: size
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Date'
+  /fillDb:
+    get:
+      tags:
+      - main-controller
+      operationId: getJson
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        avatarUrl:
+          type: string
+        text:
+          type: string
+    SetPost:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        jpgUrl:
+          type: string
+        itemId:
+          type: array
+          items:
+            type: integer
+            format: int32
+    RegistrationRequest:
+      required:
+      - login
+      - password
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    AuthRequest:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    PutSphereAndSubscriptionForUser:
+      type: object
+      properties:
+        sphere:
+          type: array
+          items:
+            type: string
+        auditories:
+          type: array
+          items:
+            type: string
+        subscription:
+          type: array
+          items:
+            type: string
+        userName:
+          type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        message:
+          type: string
+        name:
+          type: string
+    IdItemForPost:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        itemId:
+          type: integer
+          format: int32
+    Member:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          format: int32
+        name:
+          type: string
+        avatarUrl:
+          type: string
+        text:
+          type: string
+        coutWishers:
+          type: integer
+          format: int32
+        get_like:
+          type: integer
+          format: int32
+        memberName:
+          type: string
+        password:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscriptions'
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+    Post:
+      type: object
+      properties:
+        postId:
+          type: integer
+          format: int32
+        title:
+          type: string
+        text:
+          type: string
+        jpgUrl:
+          type: string
+        idItemForPosts:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdItemForPost'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        get_likes:
+          type: integer
+          format: int32
+        name:
+          type: string
+        date:
+          type: string
+          format: date-time
+    Role:
+      type: object
+      properties:
+        roleId:
+          type: integer
+          format: int32
+        name:
+          type: string
+    Subscriptions:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        sphere:
+          type: string
+        memberId:
+          type: integer
+          format: int32
+    CommentDto:
+      type: object
+      properties:
+        message:
+          type: string
+        name:
+          type: string
+    GetPost:
+      type: object
+      properties:
+        postId:
+          type: integer
+          format: int32
+        name:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+        jpgUrl:
+          type: string
+        previews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preview'
+        commentDtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentDto'
+        like:
+          type: integer
+          format: int32
+        date:
+          type: string
+          format: date-time
+    Preview:
+      type: object
+      properties:
+        idItem:
+          type: integer
+          format: int32
+        date:
+          type: string
+        title:
+          type: string
+        jpgUrl:
+          type: string
+        sphere:
+          type: array
+          items:
+            type: string
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        date_from_timestamp:
+          type: integer
+          format: int32
+        free:
+          type: boolean
+        address:
+          type: string
+    PutSphere:
+      type: object
+      properties:
+        titles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        auditories:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    ItemInfo:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        date_to_timestamp:
+          type: integer
+          format: int32
+        date_from_timestamp:
+          type: integer
+          format: int32
+        date_from:
+          type: string
+        date_to:
+          type: string
+        address:
+          type: array
+          items:
+            $ref: '#/components/schemas/Spot'
+        phone:
+          type: string
+        jpgUrl:
+          type: string
+    Spot:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        address:
+          type: string
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        foundationId:
+          type: integer
+          format: int32
+    Date:
+      type: object
+      properties:
+        date:
+          type: string
+        sphere:
+          type: array
+          items:
+            type: string
+        free:
+          type: boolean
+        title:
+          type: string
+        date_from_timestamp:
+          type: integer
+          format: int32
+        idItem:
+          type: integer
+          format: int32
