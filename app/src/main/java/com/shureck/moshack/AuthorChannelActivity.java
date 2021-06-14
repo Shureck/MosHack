@@ -7,21 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class MyChannelActivity extends AppCompatActivity {
+public class AuthorChannelActivity extends AppCompatActivity {
 
-    LinearLayout universalContainer;
+    LinearLayout authorContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_channel);
+        setContentView(R.layout.activity_author_channel);
 
-        universalContainer = findViewById(R.id.universalContainer);
-        LayoutInflater eventsInflater = LayoutInflater.from(universalContainer.getContext());
+        authorContainer = findViewById(R.id.channelFeedContainer);
+        LayoutInflater eventsInflater = LayoutInflater.from(authorContainer.getContext());
 
         for (int i = 0; i < 5; i++) {
             View channelEvent = eventsInflater.inflate(R.layout.post_short_info, null);
-            universalContainer.addView(channelEvent);
+            authorContainer.addView(channelEvent);
         }
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyChannelActivity">
+    tools:context=".AuthorChannelActivity">
 
     <ScrollView
         app:layout_constraintStart_toStartOf="parent"
@@ -15,12 +15,12 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fullChannelContainer"
+            android:id="@+id/authorChannelContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/profileChannelPicCard"
+                android:id="@+id/authorChannelPicCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="120dp"
@@ -35,7 +35,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
-                    android:id="@+id/profileChannelPic"
+                    android:id="@+id/authorChannelPic"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:src="@color/white_gray"
@@ -44,8 +44,8 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/profileFullChannelName"
-                app:layout_constraintTop_toBottomOf="@id/profileChannelPicCard"
+                android:id="@+id/authorChannelName"
+                app:layout_constraintTop_toBottomOf="@id/authorChannelPicCard"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="wrap_content"
@@ -60,11 +60,11 @@
                 />
 
             <LinearLayout
-                android:id="@+id/statsContainer"
+                android:id="@+id/authorStatsContainer"
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileFullChannelName"
+                app:layout_constraintTop_toBottomOf="@id/authorChannelName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -86,7 +86,7 @@
                         android:layout_marginStart="32dp">
 
                         <ImageView
-                            android:id="@+id/subsIconFullChannel"
+                            android:id="@+id/subsIconAuthorChannel"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/ic_round_group_24"
@@ -94,7 +94,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/subsCountFullChannel"
+                            android:id="@+id/subsCountAuthorChannel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/full_channel_subs"
@@ -125,7 +125,7 @@
                         android:layout_marginEnd="32dp">
 
                         <ImageView
-                            android:id="@+id/likesIconFullChannel"
+                            android:id="@+id/likesIconAuthorChannel"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/ic_baseline_favorite_24_blue"
@@ -133,7 +133,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/likesCountFullChannel"
+                            android:id="@+id/likesCountAuthorChannel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/full_channel_likes"
@@ -149,12 +149,12 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/fullChannelDescription"
+                android:id="@+id/authorChannelDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/statsContainer"
+                app:layout_constraintTop_toBottomOf="@id/authorStatsContainer"
                 android:text="@string/full_channel_desc"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -163,64 +163,44 @@
                 android:layout_marginTop="12dp"
                 android:textColor="@color/black"/>
 
-            <LinearLayout
-                android:id="@+id/fullChannelButtonsContainer"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fullChannelDescription"
+            <Button
+                android:id="@+id/authorSubscribeButton"
+                style="@style/BigButtonThemeActive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:elegantTextHeight="true"
+                android:text="@string/subscribe"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/authorChannelDescription" />
+
+            <TextView
+                android:id="@+id/channelFeedHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                >
-
-                <Button
-                    android:id="@+id/catButtonFullChannel"
-                    android:layout_weight="1"
-                    android:text="@string/cats_button"
-                    android:layout_marginStart="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/main_blue"
-                    android:textColor="@color/white_gray"
-                    style="@style/SmallButtonThemeInactive"
-                    />
-
-                <Button
-                    android:id="@+id/subsButtonFullChannel"
-                    android:layout_weight="1"
-                    android:text="@string/subs_button"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/SmallButtonThemeInactive"
-                    />
-
-                <Button
-                    android:id="@+id/myPostsButton"
-                    android:layout_weight="1"
-                    android:text="@string/my_posts"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/SmallButtonThemeInactive"
-                    />
-
-
-            </LinearLayout>
+                android:text="@string/channel_feed"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/authorSubscribeButton"/>
 
             <LinearLayout
-                android:id="@+id/universalContainer"
+                android:id="@+id/channelFeedContainer"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fullChannelButtonsContainer"
+                app:layout_constraintTop_toBottomOf="@id/channelFeedHeader"
                 android:layout_marginTop="8dp">
 
             </LinearLayout>
@@ -229,17 +209,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newPostButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:tint="@android:color/white"
-        android:src="@drawable/ic_round_post_add_24"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
