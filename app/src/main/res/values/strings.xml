@@ -113,4 +113,7 @@
         Москвы от искусствоведа с образованием</string>
     <string name="subs_button">Подписки</string>
     <string name="my_posts">Посты</string>
+    <string name="short_post_text">В городе проводится много разных уличных выставок,
+        некоторые из которых не обойдёшь стороной. Это…</string>
+    <string name="show_pinned_events">Просмотреть прикреплённые мероприятия</string>
 </resources>
