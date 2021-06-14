@@ -74,7 +74,7 @@ public class FullPostActivity extends AppCompatActivity {
         });
 
 
-        new IOAsyncTask().execute("http://45.157.140.16:23200/user/getPost?postId="+id);
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/getPost?postId="+id);
     }
 
     public void setData(HardPostModel previews){
@@ -99,22 +99,9 @@ public class FullPostActivity extends AppCompatActivity {
         fullPostText.setText(previews.text);
         fullPostHeader.setText(previews.title);
 
-        for (int i=0; i < previews.previews.size(); i++) {
+        for (int i=0; i < 1; i++) {
 
-            View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);
-
-            TextView shortInfoTime = newEventToPin.findViewById(R.id.shortInfoTime);
-            TextView shortInfoSphere = newEventToPin.findViewById(R.id.shortInfoSphere);
-            TextView shortInfoFree = newEventToPin.findViewById(R.id.shortInfoFree);
-            TextView shortInfoHeader = newEventToPin.findViewById(R.id.shortInfoHeader);
-
-            shortInfoSphere.setText(previews.previews.get(i).sphere.get(0));
-            if (previews.previews.get(i).free) {
-                shortInfoFree.setText("Бесплатно");
-            } else {
-                shortInfoFree.setText("");
-            }
-            shortInfoHeader.setText(previews.previews.get(i).title);
+            View newEventToPin = inflaterPinned.inflate(R.layout.short_event_info, null);;
 
             pinnedEventsContainer.addView(newEventToPin);
         }

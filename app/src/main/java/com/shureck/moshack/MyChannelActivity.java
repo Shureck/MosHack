@@ -70,7 +70,7 @@ public class MyChannelActivity extends AppCompatActivity implements View.OnClick
 //        }
 
         currentCarouselButton = findViewById(R.id.myPostsButton);
-        new IOAsyncTask().execute("http://45.157.140.16:23200/user/getUser","1");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/user/getUser","1");
     }
 
     @Override
@@ -111,7 +111,7 @@ public class MyChannelActivity extends AppCompatActivity implements View.OnClick
 //                });
 //                universalContainer.addView(channelEvent);
 //            }
-            new IOAsyncTask().execute("http://45.157.140.16:23200/user/getUser","1");
+            new IOAsyncTask().execute("http://192.168.31.187:8083/user/getUser","1");
         }
     }
 

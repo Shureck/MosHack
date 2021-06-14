@@ -101,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = ll;
 
-        new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page="+new Random().nextInt(15)+"&size=20");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size=20");
 
         currentCarouselButton = findViewById(R.id.buttonAllMap);
     }
@@ -286,13 +286,13 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
             tag = "def";
             String count = "20";
             liner.removeAllViews();
-            new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page="+new Random().nextInt(15)+"&size="+count);
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size="+count);
         }
         else{
             tag = ((Button) v).getText().toString();
             String count = "100";
             liner.removeAllViews();
-            new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page=0&size="+count);
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size="+count);
         }
     }
 

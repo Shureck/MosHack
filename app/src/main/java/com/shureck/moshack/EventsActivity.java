@@ -102,12 +102,12 @@ public class EventsActivity extends AppCompatActivity {
         TextView top = findViewById(R.id.channelNameInfo);
         top.setText(tag);
 
-        new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page=0&size=500");
+        new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size=500");
     }
 
     void changeCarouselButtonDesign(Button button, boolean activate) {
 
-        new IOAsyncPostTask().execute("http://45.157.140.16:23200/user/userSubscription?sphere="+tag);
+        new IOAsyncPostTask().execute("http://192.168.31.187:8083/user/userSubscription?sphere="+tag);
         int buttonColor, textColor;
         if (!activate) {
             buttonColor = getResources().getColor(R.color.light_gray);

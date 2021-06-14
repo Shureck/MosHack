@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toolBarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
             toolBarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_BOLD());
           
-            new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page="+new Random().nextInt(15)+"&size="+count);
+            new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size="+count);
         }
 
         currentCarouselButton = findViewById(R.id.buttonAll);
@@ -173,13 +173,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tag = "def";
                     String count = "20";
                     mainEventsContainer.removeAllViews();
-                    new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page="+new Random().nextInt(15)+"&size="+count);
+                    new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page="+new Random().nextInt(15)+"&size="+count);
                 }
                 else{
                     tag = ((Button) v).getText().toString();
                     String count = "100";
                     mainEventsContainer.removeAllViews();
-                    new IOAsyncTask().execute("http://45.157.140.16:23200/preview?page=0&size="+count);
+                    new IOAsyncTask().execute("http://192.168.31.187:8083/preview?page=0&size="+count);
                 }
                 break;
         }
