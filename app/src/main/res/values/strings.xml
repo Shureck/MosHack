@@ -116,4 +116,5 @@
     <string name="short_post_text">В городе проводится много разных уличных выставок,
         некоторые из которых не обойдёшь стороной. Это…</string>
     <string name="show_pinned_events">Просмотреть прикреплённые мероприятия</string>
+    <string name="channel_feed">Лента канала</string>
 </resources>
